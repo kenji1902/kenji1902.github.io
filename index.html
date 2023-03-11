@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    
+    <!-- Jquery and Bootstrap CDN -->
+    <script src="https://code.jquery.com/jquery-3.6.4.js" integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link rel="stylesheet" href="assets/home/css/slider.css">
+    <link rel="stylesheet" href="assets/home/css/creativeside.css">
+    <link rel="stylesheet" href="assets/home/css/developerside.css">
+
+    <script src="assets/home/js/slider.js"></script>
+
+    
+</head>
+<body>
+    <div class="slideContainer">
+        <div id="left" class="slide">
+            <div class="left item">
+                <div class="background">
+                    <!-- <img class="image" src="assets/home/images/PotionPunch2_KeyArt_1270x720.2e16d0ba.fill-1366x640.png"> -->
+
+                    <object class="image" data="assets/home/images/Developer sidemonster.svg" type=""></object>
+                    <span class="title leftText slide-in-left">DEVELOPER</span>
+                    <span class="title centerText LcenterText none">DEVELOPER</span>
+
+                </div>
+            </div>
+        </div>
+        <div id="right" class="slide">
+            <div class="right item">
+               <div class="background">
+                    <object class="image" data="assets/home/images/Creative sidemonster.svg" type=""></object>
+                    <!-- <img class="image" src="assets/home/images/PotionPunch2_KeyArt_1270x720.2e16d0ba.fill-1366x640.png"> -->
+                    <span class="title rightText slide-in-right">CREATIVE</span>
+                    <span class="title centerText RcenterText none">CREATIVE</span>
+
+                </div>
+            </div>
+        </div>
+        <input type="range" id="slider" min="0" max="100" value="50">
+        <div id="slider-line" class="slider-line" aria-hidden="true"></div>
+        <div id="slider-button" class="slider-button">
+            <span class="material-symbols-outlined">
+                arrow_range
+            </span>
+        </div>
+    </div>
+    
+   
+</body>
+</html>
