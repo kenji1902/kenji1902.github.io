@@ -1,0 +1,21 @@
+.right{
+    --right-background:  #080734;
+    --right-foreground-midtone: #e60067;
+    --right-foreground-highlight: #ffa7ce;
+    --right-foreground-shadow: #a21171;
+    --right-background-midtone: #312893;
+    --right-background-highlight: #4030d1;
+    --right-background-shadow: #1d1353;
+    background-color: var(--right-background)
+
+}
+.right .background .title{
+    margin-top: 200px;
+    position: absolute;
+    color: var(--right-background-highlight);
+    /* text-shadow: 0px 3px 8px rgba(0, 0, 0, 0.24); */
+}
+.right .background .rightText{
+    right: 15%;
+}
+

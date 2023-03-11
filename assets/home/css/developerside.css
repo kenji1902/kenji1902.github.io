@@ -1,0 +1,18 @@
+.left{
+    --left-background:  #29003b;
+    --left-foreground-midtone: #e63600;
+    --left-foreground-highlight: #ffbca7;
+    --left-foreground-shadow: #b30300;
+    --left-background-midtone: #d02cff;
+    --left-background-highlight: #d02cff;
+    --left-background-shadow: #6f008b;
+    background-color: var(--left-background);
+}
+.left .background .title{
+    margin-top: 200px;
+    position: absolute;
+    color: var(--left-background-highlight);
+}
+.left .background .leftText{
+    left: 10%;
+}
