@@ -12,7 +12,7 @@
     position: relative;
     flex-direction: column;
     width: 100%;
-    height: 100rem;
+    height: 1000rem;
     overflow: hidden;
 }
 
@@ -34,22 +34,33 @@
     width: 100vw;
     height: 100%;
 }
-.item .background{
+.item .content{
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center;
     position: relative;
     width: 100%;
-    height: 50rem;
-    overflow: hidden;
+    /* height: 800px; */
+    /* overflow: hidden; */
 }
-.background .image{
+/* HOME PAGE IMAGE */
+.content .image{
     height: max-content;
     width: 100%;
 }
-.background .title{
+@media screen and (max-width: 1095px) {
+  .content .image{
+    height: 95vh;
+    width: auto;
+}
+}
+/* DEVELOPER AND CREATIVE TITLE */
+.content .title{
     font-family: alien;
     font-size: 100pt;
     text-align: start;
+    margin-top: 200px;
+    position: absolute;
     text-shadow: 0px 10px 3px rgba(0, 0, 0, 1);
 }
 .centerText{
@@ -59,6 +70,37 @@
 .none {
     display: none;
 }
+@media screen and (max-width: 1500px) {
+  .content .title{
+    font-size: 70pt;
+  }
+}
+
+@media screen and (max-width: 1095px) {
+  .content .title{
+    margin-top: 100px;
+    writing-mode: vertical-rl;
+    text-orientation: upright;
+    font-size: 50pt;
+  }
+  .centerText{
+    margin-top: 35vh !important;
+    writing-mode: unset !important;
+    font-size: 80pt !important;
+  }
+}
+@media screen and (max-width: 580px) {
+  .content .title{
+    font-size: 30pt;
+  }
+  .centerText{
+    margin-top: 35vh !important;
+    writing-mode: unset !important;
+    font-size: 50pt !important;
+  }
+}
+
+/* ############################ */
 
 
 #slider{
@@ -124,6 +166,15 @@
     z-index: 2;
     box-shadow: 1px 1px 1px hsl(0, 50%, 2%, .5);
   }
+
+
+
+
+.arrow{
+    position: relative;
+    display: block;
+    transform: translateY(-10rem);
+}
 
 .arrow .arr {
     display: block;

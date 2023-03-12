@@ -6,13 +6,40 @@
     --left-background-midtone: #d02cff;
     --left-background-highlight: #d02cff;
     --left-background-shadow: #6f008b;
+    --left-text-light: #ffffff;
+
     background-color: var(--left-background);
+    
 }
-.left .background .title{
-    margin-top: 200px;
-    position: absolute;
+.left .content .image{
+    border-bottom: 3rem solid var(--left-background-highlight);
+}
+.left .content .title{
     color: var(--left-background-highlight);
 }
-.left .background .leftText{
-    left: 10%;
+.left .content .leftText{
+    right: 55%;
 }
+.left .content .portfolioContent{
+    background-color: var(--left-background);
+}
+
+@media screen and (max-width: 1095px) {
+    .left .content .leftText{
+      right: 75%;
+    }
+}
+
+/* PORTFOLIO */
+
+.Lservices{
+    color: var(--left-text-light);
+}
+.Lservices .icons{
+    border: 2px solid var(--left-background-highlight);
+}
+.services .LlineDivider, .works .LlineDivider{
+    background-color: var(--left-background-highlight);
+}
+
+/* ##################### */
