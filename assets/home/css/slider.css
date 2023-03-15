@@ -52,8 +52,9 @@
   .content .image{
     height: 95vh;
     width: auto;
+  }
 }
-}
+
 /* DEVELOPER AND CREATIVE TITLE */
 .content .title{
     font-family: alien;
@@ -100,6 +101,13 @@
   }
 }
 
+@media screen and (max-height: 927px){
+  .content .title{
+    font-size: 8vw;
+    writing-mode: horizontal-tb;
+    margin-top: 15vh;
+  }
+}
 /* ############################ */
 
 
@@ -178,8 +186,8 @@
 
 .arrow .arr {
     display: block;
-    width: 1.5vw;
-    height: 1.5vw;
+    width: 2rem;
+    height: 2rem;
     border-bottom: 5px solid white;
     border-right: 5px solid white;
     transform: rotate(45deg);

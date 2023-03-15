@@ -19,19 +19,25 @@
 
 .portfolioContent{
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     flex-wrap: wrap;
     gap: 3rem;
     position: relative;
-    width: 100%;
+    width: 80%;
     margin-top: 4rem;
-    /* background-color: black; */
-    /* z-index: 1; */
+
 }
+
 .services{
     font-family: Roboto;
     width: 18rem;
     background-color: unset;
+    border: 0;
+}
+.vlservices{
+    font-family: Roboto;
+    background-color: unset;
+    width: 100%;
     border: 0;
 }
 .services .icons{
@@ -39,7 +45,7 @@
     padding: 1rem;
     margin-bottom: 0.5rem;
 }
-.services .lineDivider, .works .lineDivider{
+.services .lineDivider, .works .lineDivider, .vlservices .lineDivider{
     position: relative;
     height: 2px;
     width: 4rem;
@@ -54,8 +60,18 @@
     flex-wrap: wrap;
     gap: 3rem;
     position: relative;
-    width: 100%;
+    width: 80%;
     margin-top: 4rem;
+}
+.portfolioContentvl .slideshow{
+    position: relative;
+    width: 100%;
+    height: 600px;
+}
+.carousel{
+    position: relative;
+    width: 100%;
+    height: 100%;
 }
 .works{
     position: relative;

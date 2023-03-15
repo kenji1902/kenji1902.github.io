@@ -3,7 +3,7 @@ $(document).ready(function () {
     $("#slider").on('input change', function () {
         let sliderVal = this.value;
         container.style.setProperty('--position', `${sliderVal}%`);
-        console.log(this.value)
+        // console.log(this.value)
 
         
         //Creative Side

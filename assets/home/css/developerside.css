@@ -1,5 +1,5 @@
 .left{
-    --left-background:  #29003b;
+    --left-background:  #1a0125;
     --left-foreground-midtone: #e63600;
     --left-foreground-highlight: #ffbca7;
     --left-foreground-shadow: #b30300;
@@ -23,12 +23,17 @@
 .left .content .portfolioContent{
     background-color: var(--left-background);
 }
-
 @media screen and (max-width: 1095px) {
     .left .content .leftText{
       right: 75%;
     }
 }
+
+@media screen and (max-height: 1095px) {
+    .left .content .leftText{
+        right: 55%;
+      }
+  }
 
 /* PORTFOLIO */
 
@@ -38,8 +43,9 @@
 .Lservices .icons{
     border: 2px solid var(--left-background-highlight);
 }
-.services .LlineDivider, .works .LlineDivider{
+.services .LlineDivider, .works .LlineDivider,.vlservices .LlineDivider{
     background-color: var(--left-background-highlight);
 }
+
 
 /* ##################### */

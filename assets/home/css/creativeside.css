@@ -31,6 +31,11 @@
       left: 75%;
     }
 }
+@media screen and (max-height: 1095px) {
+    .right .content .rightText{
+        left: 55%;
+    }
+  }
 /* ##################### */
 
 /* PORTFOLIO */
