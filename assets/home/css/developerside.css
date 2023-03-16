@@ -46,6 +46,12 @@
 .services .LlineDivider, .works .LlineDivider,.vlservices .LlineDivider{
     background-color: var(--left-background-highlight);
 }
-
+.lightbox{
+    display: flex;
+    justify-content: center;
+}
+.lightbox img{
+    max-width: 100%;
+}
 
 /* ##################### */
