@@ -12,6 +12,7 @@
 }
 /* CREATIVE IMAGE HEADER */
 .right .content .image{
+    object-fit: cover;
     border-bottom: 3rem solid var(--right-background-highlight);
 }
 .right .content .title{

@@ -12,6 +12,7 @@
     
 }
 .left .content .image{
+    object-fit: cover;
     border-bottom: 3rem solid var(--left-background-highlight);
 }
 .left .content .title{
