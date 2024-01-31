@@ -153,7 +153,7 @@
     left: var(--position) !important;
     width: .2rem;
     height: 100%;
-    background-color: #fff;
+    background-color: #181a1b;
     z-index: 2;
     transform: translateX(-50%);
     pointer-events: none;
@@ -163,8 +163,8 @@
     justify-content: center;
     align-items: center;
     position: fixed;
-    background-color: #fff;
-    color: black;
+    background-color: #181a1b;
+    color: #fff;
     padding: 2rem 1rem;
     border-radius: 10px;
     top: 50vh;
