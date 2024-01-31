@@ -1,3 +1,3 @@
 # portfolio.io
 
-https://kenji1902.github.io/portfolio/
+https://kenji1902.github.io/
