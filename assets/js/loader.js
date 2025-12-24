@@ -124,25 +124,63 @@ function renderCreative(data) {
     `;
     container.appendChild(bioCard);
 
-    // Gallery Grid
-    const galleryGrid = document.createElement('div');
-    galleryGrid.className = 'gallery-grid tz-gallery'; // tz-gallery for baguetteBox
+    // ART HIGHLIGHT (First Image)
+    if (data.gallery && data.gallery.length > 0) {
+        const highlightImg = data.gallery[0];
+        const highlightDesc = data.highlightDescription || "Featured Artwork";
+        const highlightLink = data.highlightLink || "#";
+        const highlightTitle = data.highlightTitle || "Featured Artwork";
+        const restImages = data.gallery.slice(1);
 
-    data.gallery.forEach(imgSrc => {
-        const item = document.createElement('div');
-        item.className = 'gallery-item';
-        item.innerHTML = `
-            <a class="lightbox" href="${imgSrc}">
-                <img src="${imgSrc}" alt="Creative Work" loading="lazy">
-            </a>
+        const highlightSection = document.createElement('div');
+        highlightSection.className = 'art-highlight';
+
+        // Split Layout HTML
+        highlightSection.innerHTML = `
+            <div class="highlight-card">
+                 <div class="highlight-img-col">
+                     <a class="lightbox" href="${highlightImg}" data-caption="${highlightDesc}">
+                        <img src="${highlightImg}" alt="Highlight Art" loading="lazy">
+                     </a>
+                 </div>
+                 <div class="highlight-text-col">
+                     <h3 style="color: var(--creative-accent); margin-bottom: 0.5rem;">${highlightTitle}</h3>
+                     <p style="margin: 1rem 0; font-style: italic; color: #ccc; line-height: 1.6;">${highlightDesc}</p>
+                     
+                     ${data.highlightLink ? `
+                     <a href="${highlightLink}" target="_blank" class="view-link">
+                        View on Instagram <span>&rarr;</span>
+                     </a>` : ''}
+                 </div>
+            </div>
+            <hr style="border-color: rgba(255,255,255,0.1); margin: 2rem 0;">
         `;
-        galleryGrid.appendChild(item);
-    });
+        container.appendChild(highlightSection);
 
-    container.appendChild(galleryGrid);
+        // Gallery Grid (Remaining Images)
+        const galleryGrid = document.createElement('div');
+        galleryGrid.className = 'gallery-grid tz-gallery'; // tz-gallery for baguetteBox
+
+        restImages.forEach(imgSrc => {
+            const item = document.createElement('div');
+            item.className = 'gallery-item';
+            item.innerHTML = `
+                <a class="lightbox" href="${imgSrc}">
+                    <img src="${imgSrc}" alt="Creative Work" loading="lazy">
+                </a>
+            `;
+            galleryGrid.appendChild(item);
+        });
+        container.appendChild(galleryGrid);
+    } else {
+        // Fallback if no images
+        const galleryGrid = document.createElement('div');
+        galleryGrid.className = 'gallery-grid tz-gallery';
+        container.appendChild(galleryGrid);
+    }
 
     // Refresh lightbox
-    if (window.baguetteBox) baguetteBox.run('.tz-gallery');
+    if (window.baguetteBox) baguetteBox.run('.tz-gallery, .art-highlight');
 }
 
 // Initialize
