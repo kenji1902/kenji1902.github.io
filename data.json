@@ -153,7 +153,7 @@
             "pullGradient": 0.1009,
             "baseTrackStrength": 0.005,
             "hotColor": "#ffdd40",
-            "maxParticleSize": 80
+            "maxParticleSize": 20
         }
     }
 }
