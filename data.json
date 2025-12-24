@@ -149,6 +149,9 @@
             "interactionRadius": 250,
             "returnEase": 0.0002,
             "suctionEase": 0.997,
+            "suctionGradient": 0.005,
+            "pullGradient": 0.1009,
+            "baseTrackStrength": 0.005,
             "hotColor": "#ffdd40",
             "maxParticleSize": 80
         }

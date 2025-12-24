@@ -173,8 +173,13 @@ class GalaxyParticle extends Particle {
             let rotX = relX * cos - relY * sin;
             let rotY = relX * sin + relY * cos;
 
-            // GRAVITY (Containment)
-            const gravity = this.effect.config.suctionEase || 0.999;
+            // GRAVITY (Containment - Dynamic Gradient)
+            // baseSuction is usually ~0.997. We decrease it as we get closer (more suction)
+            const baseSuction = this.effect.config.suctionEase || 0.997;
+            const suctionGradient = this.effect.config.suctionGradient !== undefined ? this.effect.config.suctionGradient : 0.01;
+            const suctionStrength = suctionGradient * ratio; // Pull harder as ratio increases (closer to mouse)
+            const gravity = baseSuction - suctionStrength;
+
             rotX *= gravity;
             rotY *= gravity;
 
@@ -182,9 +187,14 @@ class GalaxyParticle extends Particle {
             const targetX = this.effect.mouse.x + rotX;
             const targetY = this.effect.mouse.y + rotY;
 
-            // ORBIT FORCE (Capture)
-            forceX = (targetX - this.x) * 0.1;
-            forceY = (targetY - this.y) * 0.1;
+            // ORBIT FORCE (Capture - Dynamic Gradient)
+            // We increase the tracking strength as we get closer
+            const baseTrack = this.effect.config.baseTrackStrength !== undefined ? this.effect.config.baseTrackStrength : 0.05;
+            const pullGrad = this.effect.config.pullGradient !== undefined ? this.effect.config.pullGradient : 0.15;
+            const trackStrength = baseTrack + (ratio * pullGrad);
+
+            forceX = (targetX - this.x) * trackStrength;
+            forceY = (targetY - this.y) * trackStrength;
 
             this.vx += forceX;
             this.vy += forceY;
