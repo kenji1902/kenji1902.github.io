@@ -155,5 +155,8 @@
             "hotColor": "#ffdd40",
             "maxParticleSize": 20
         }
+    },
+    "mobileConfig": {
+        "headerHideThreshold": 0.8
     }
 }

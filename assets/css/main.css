@@ -187,7 +187,7 @@ body {
     /* Let clicks pass to canvas */
     position: absolute;
     /* Absolute positioning for sliding */
-    transition: transform 0.1s linear;
+    transition: transform 0.1s linear, opacity 0.3s ease;
     width: auto;
     max-width: 80%;
 

@@ -129,24 +129,26 @@ function moveDrag(e) {
         handle.style.transform = 'translateY(-50%)';
 
         // ANIMATE HEADERS (MOBILE)
-        // Developer is visible approx 0 to y. Center = y/2.
-        // Creative is visible approx y to Height. Center = y + (h-y)/2.
+        const threshold = (window.mobileConfig && window.mobileConfig.headerHideThreshold) !== undefined
+            ? window.mobileConfig.headerHideThreshold
+            : 0.8;
+
         if (devHeader) {
             const devCenter = y / 2;
             devHeader.style.top = `${devCenter}px`;
 
-            // Opacity: Fade if height ratio is small
+            // Opacity: Hide if height ratio is ABOVE threshold (dominant panel)
             const devRatio = y / windowHeight;
-            devHeader.style.opacity = devRatio < 0.15 ? devRatio * 6 : 1;
+            devHeader.style.opacity = devRatio > threshold ? 0 : 1;
         }
 
         if (creativeHeader) {
             const creativeCenter = y + (windowHeight - y) / 2;
             creativeHeader.style.top = `${creativeCenter}px`;
 
-            // Opacity
+            // Opacity: Hide if height ratio is ABOVE threshold (dominant panel)
             const creativeRatio = (windowHeight - y) / windowHeight;
-            creativeHeader.style.opacity = creativeRatio < 0.15 ? creativeRatio * 6 : 1;
+            creativeHeader.style.opacity = creativeRatio > threshold ? 0 : 1;
         }
 
     } else {
@@ -177,17 +179,21 @@ function moveDrag(e) {
         handle.style.transform = 'translate(-50%, -50%)';
 
         // ANIMATE HEADERS
+        const threshold = (window.mobileConfig && window.mobileConfig.headerHideThreshold) !== undefined
+            ? window.mobileConfig.headerHideThreshold
+            : 0.8;
+
         if (devHeader) {
             let devCenter = (ratio * 100) / 2;
             devHeader.style.left = `${devCenter}vw`; // Use vw
-            devHeader.style.opacity = ratio < 0.15 ? ratio * 6 : 1;
+            devHeader.style.opacity = ratio > threshold ? 0 : 1;
         }
 
         if (creativeHeader) {
             let creativeRatio = 1 - ratio;
             let creativeCenter = (creativeRatio * 100) / 2;
             creativeHeader.style.right = `${creativeCenter}vw`; // Use vw
-            creativeHeader.style.opacity = creativeRatio < 0.15 ? creativeRatio * 6 : 1;
+            creativeHeader.style.opacity = creativeRatio > threshold ? 0 : 1;
         }
     }
 }

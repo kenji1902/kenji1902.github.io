@@ -10,6 +10,9 @@ async function loadData() {
         if (!response.ok) throw new Error('Failed to load data');
         const data = await response.json();
 
+        // Expose configuration globally for app.js
+        window.mobileConfig = data.mobileConfig || { headerHideThreshold: 0.2 };
+
         renderDeveloper(data.developer);
         renderCreative(data.creative);
 
