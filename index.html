@@ -1,509 +1,110 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kenji Shimizu | Developer & Creative</title>
     <link rel="icon" type="image/x-icon" href="https://avatars.githubusercontent.com/u/30095254?v=4">
-    <title>Portfolio</title>
-    
-    <!-- Jquery and Bootstrap CDN -->
-    <script src="https://code.jquery.com/jquery-3.6.4.js" integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E=" crossorigin="anonymous"></script>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
 
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Comforter+Brush&display=swap"
+        rel="stylesheet">
 
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-    <link rel="stylesheet" href="assets/home/css/slider.css">
-    <link rel="stylesheet" href="assets/home/css/creativeside.css">
-    <link rel="stylesheet" href="assets/home/css/developerside.css">
-    <link rel="stylesheet" href="assets/home/css/portfolioContent.css">
-
+    <!-- BaguetteBox for Gallery -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.8.1/baguetteBox.min.css">
-    <script src="assets/home/js/slider.js"></script>
-    <script src="assets/home/js/creativeside.js"></script>
-    
+
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="assets/css/main.css">
 </head>
+
 <body>
-    <div class="slideContainer">
-        <div id="left" class="slide">
-            <div class="left item">
-                <div class="content">
-                    <img class="image" src="assets/home/images/Developer sidemonster.svg" type=""></img>
-                    <span class="title leftText slide-in-left">DEVELOPER</span>
-                    <span class="title centerText LcenterText none">DEVELOPER</span>
-                    <div class="arrow">
-                        <span class="arr arr1"></span>
-                        <span class="arr arr2"></span>
-                        <span class="arr arr3"></span>
-                    </div>
-                    <!-- ### -->
-                    <div class="portfolioContent mx-20">
-                        <div class="services Lservices card mb-3">
-                            <div class="card-body">
-                                <h5 class="card-title">SKILLS</h5>
-                                <h2 class="card-title fw-bolder">WHAT DO I DO?</h2>
-                                <div class="lineDivider LlineDivider" aria-hidden="true"></div>
-                                <p class="card-text">As a graduate of Computer Science with specialization of Software Engineering, 
-                                    I have a strong foundation in the principles and practices of software development.</p>
-                            </div>
-                        </div>
-                        <div class="services Lservices card mb-3">
-                            <div class="card-body">
-                                <span class="icons material-symbols-outlined">border_color</span>
-                                <h5 class="card-title fw-bolder">DEVELOPER</h5>
-                                <div class="lineDivider LlineDivider" aria-hidden="true"></div>
-                                <p class="card-text">
-                                    C#, C++, Django, Java, Machine Learning, Neural Networks, Python, Php, Javascript, HTML and CSS, and SQL
-                                </p>
 
-                            </div>
-                        </div>
-                        <div class="services Lservices card mb-3">
-                            <div class="card-body">
-                                <span class="icons material-symbols-outlined">terminal</span>
-                                <h5 class="card-title fw-bolder">PASSION</h5>
-                                <div class="lineDivider LlineDivider" aria-hidden="true"></div>
-                                <p class="card-text">  I am passionate about technological Innovations and their potential to positively impact society </p>
-                                <span>Github: </span> <a href="https://github.com/kenji1902"> kenji1902</a><br>
-                            </div>
-                        </div>
-                        <div class="services Lservices card mb-3">
-                            <div class="card-body">
-                                <span class="icons material-symbols-outlined">alternate_email</span>
-                                <h5 class="card-title fw-bolder">CONTACT</h5>
-                                <div class="lineDivider LlineDivider" aria-hidden="true"></div>
-                                <p class="card-text">
-                                <span>Linkedin: </span> <a href="https://www.linkedin.com/in/kenji-shimizu-07798b130/"> Kenji Shimizu</a><br>
-                                <span>Email: </span> kenjishimizu.dev@gmail.com<br>
-                                <span>Contact #: </span> +63 917 502 8874<br>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="portfolioContentvl">
-                        <!-- #ITEM 1 START -->
-                        <div class="vlservices Lservices card mb-3">
-                            <div class="card-body">
-                                <h5 class="card-title">Deep Hybrid Learning</h5>
-                                <h2 class="card-title fw-bolder">Invasive Plants Classifier</h2>
-                                <div class="lineDivider LlineDivider" aria-hidden="true"></div>
-                                <p class="card-text">This software aims to tackle the issue of invasive plants in the Philippines by using a combination of machine learning techniques. It utilizes Convolutional Neural Network (CNN) and K-Nearest Neighbor (KNN) classifiers to accurately classify selected invasive plant species, helping to reduce their ecological and economic impact. </p>
-                            </div>
-                        </div>
-                        <div class="slideshow">
-                            <div id="dhl" class="carousel carousel-dark slide" data-bs-ride="true"  data-bs-theme="dark">
-                                <div class="carousel-indicators">
-                                  <button type="button" data-bs-target="#dhl" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-                                  <button type="button" data-bs-target="#dhl" data-bs-slide-to="1" aria-label="Slide 2"></button>
-                                  <button type="button" data-bs-target="#dhl" data-bs-slide-to="2" aria-label="Slide 3"></button>
-                                  <button type="button" data-bs-target="#dhl" data-bs-slide-to="3" aria-label="Slide 4"></button>
-                                  <button type="button" data-bs-target="#dhl" data-bs-slide-to="4" aria-label="Slide 5"></button>
-                                  <button type="button" data-bs-target="#dhl" data-bs-slide-to="5" aria-label="Slide 6"></button>
-                                  <button type="button" data-bs-target="#dhl" data-bs-slide-to="6" aria-label="Slide 7"></button>
-                                </div>
-                                <div class="carousel-inner">
-                                    <div class="carousel-item active">
-                                        <a class="lightbox" href="assets/home/images/iasClassifier/System Architecture.jpg">
-                                            <img src="assets/home/images/iasClassifier/System Architecture.jpg" alt="">
-                                        </a>                                  
-                                    </div>
-                                    <div class="carousel-item">
-                                        <a class="lightbox" href="assets/home/images/iasClassifier/Screenshot 2023-03-16 201300.jpg">
-                                            <img src="assets/home/images/iasClassifier/Screenshot 2023-03-16 201300.jpg" alt="">
-                                        </a>                                  
-                                    </div>
-                                    <div class="carousel-item">
-                                        <a class="lightbox" href="assets/home/images/iasClassifier/Screenshot 2023-03-16 201445.jpg">
-                                            <img src="assets/home/images/iasClassifier/Screenshot 2023-03-16 201445.jpg" alt="">
-                                        </a>                                  
-                                    </div>
-                                    <div class="carousel-item">
-                                        <a class="lightbox" href="assets/home/images/iasClassifier/Screenshot 2023-03-16 201449.jpg">
-                                            <img src="assets/home/images/iasClassifier/Screenshot 2023-03-16 201449.jpg" alt="">
-                                        </a>                                  
-                                    </div>
-                                    <div class="carousel-item">
-                                        <a class="lightbox" href="assets/home/images/iasClassifier/Screenshot 2023-03-16 201519.jpg">
-                                            <img src="assets/home/images/iasClassifier/Screenshot 2023-03-16 201519.jpg" alt="">
-                                        </a>                                  
-                                    </div>
-                                    <div class="carousel-item">
-                                        <a class="lightbox" href="assets/home/images/iasClassifier/Screenshot 2023-03-16 201553.jpg">
-                                            <img src="assets/home/images/iasClassifier/Screenshot 2023-03-16 201553.jpg" alt="">
-                                        </a>                                  
-                                    </div>
-                                    <div class="carousel-item">
-                                        <a class="lightbox" href="assets/home/images/iasClassifier/Screenshot 2023-03-16 201622.jpg">
-                                            <img src="assets/home/images/iasClassifier/Screenshot 2023-03-16 201622.jpg" alt="">
-                                        </a>                                  
-                                    </div>
-                                </div>
-                                <button class="carousel-control-prev" type="button" data-bs-target="#dhl" data-bs-slide="prev">
-                                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                  <span class="visually-hidden">Previous</span>
-                                </button>
-                                <button class="carousel-control-next" type="button" data-bs-target="#dhl" data-bs-slide="next">
-                                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                  <span class="visually-hidden">Next</span>
-                                </button>
-                            </div>
-                        </div>
-                        <!-- #ITEM 1 END -->
-                        
-                        <!-- #ITEM 2 START -->
-                        <div class="vlservices Lservices card mb-3">
-                            <div class="card-body">
-                                <h5 class="card-title">Multilayer perceptron</h5>
-                                <h2 class="card-title fw-bolder">MLP Feed Forward Neural Network</h2>
-                                <div class="lineDivider LlineDivider" aria-hidden="true"></div>
-                                <p class="card-text">An MLP FNN Lecture Demonstration from Simple model to Custom Complex Model that uses Sample Iris Dataset From Training. This Lecture was used to teach the basics of MLP up to the complex custom MLP model</p>
-                            </div>
-                        </div>
-                        <div class="slideshow">
-                            <div id="mlp" class="carousel slide" data-bs-ride="true">
-                                <div class="carousel-indicators">
-                                  <button type="button" data-bs-target="#mlp" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-                                  <button type="button" data-bs-target="#mlp" data-bs-slide-to="1" aria-label="Slide 2"></button>
-                                </div>
-                                <div class="carousel-inner">
-                                    <div class="carousel-item active">
-                                        <a class="lightbox" href="assets/home/images/MLP/Screenshot 2023-03-16 205101.jpg">
-                                            <img src="assets/home/images/MLP/Screenshot 2023-03-16 205101.jpg" alt="">
-                                        </a>                                  
-                                    </div>
-                                    <div class="carousel-item">
-                                        <a class="lightbox" href="assets/home/images/MLP/Screenshot 2023-03-16 205126.jpg">
-                                            <img src="assets/home/images/MLP/Screenshot 2023-03-16 205126.jpg" alt="">
-                                        </a>                                  
-                                    </div>
-                                </div>
-                                <button class="carousel-control-prev" type="button" data-bs-target="#mlp" data-bs-slide="prev">
-                                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                  <span class="visually-hidden">Previous</span>
-                                </button>
-                                <button class="carousel-control-next" type="button" data-bs-target="#mlp" data-bs-slide="next">
-                                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                  <span class="visually-hidden">Next</span>
-                                </button>
-                              </div>
-                        </div>
-                        <!-- #ITEM 2 END -->
-
-                        <!-- #ITEM 3 START -->
-                        <div class="vlservices Lservices card mb-3">
-                            <div class="card-body">
-                                <h5 class="card-title">Game Development using Libgdx</h5>
-                                <h2 class="card-title fw-bolder">JediJump</h2>
-                                <div class="lineDivider LlineDivider" aria-hidden="true"></div>
-                                <p class="card-text">1 week project that is a 2-D infinite Jumping game that challenges players to jump through various obstacles and platforms while avoiding dangerous enemies and collecting power-ups to enhance their abilities. The game requires a deep understanding of programming concepts such as object-oriented programming, data structures, algorithms, and game mechanics</p>
-                            </div>
-                        </div>
-                        <div class="slideshow">
-                            <div id="jedijump" class="carousel slide" data-bs-ride="true">
-                                <div class="carousel-indicators">
-                                  <button type="button" data-bs-target="#jedijump" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-                                  <button type="button" data-bs-target="#jedijump" data-bs-slide-to="1" aria-label="Slide 2"></button>
-                                  <button type="button" data-bs-target="#jedijump" data-bs-slide-to="2" aria-label="Slide 3"></button>
-                                  <button type="button" data-bs-target="#jedijump" data-bs-slide-to="3" aria-label="Slide 4"></button>
-
-                                </div>
-                                <div class="carousel-inner">
-                                    <div class="carousel-item active">
-                                        <a class="lightbox" href="assets/home/images/JediJump/Screenshot 2023-03-16 210156.jpg">
-                                            <img src="assets/home/images/JediJump/Screenshot 2023-03-16 210156.jpg" alt="">
-                                        </a>                                  
-                                    </div>
-                                    <div class="carousel-item">
-                                        <a class="lightbox" href="assets/home/images/JediJump/Screenshot 2023-03-16 210211.jpg">
-                                            <img src="assets/home/images/JediJump/Screenshot 2023-03-16 210211.jpg" alt="">
-                                        </a>                                  
-                                    </div>
-                                    <div class="carousel-item">
-                                        <a class="lightbox" href="assets/home/images/JediJump/Screenshot 2023-03-16 210217.jpg">
-                                            <img src="assets/home/images/JediJump/Screenshot 2023-03-16 210217.jpg" alt="">
-                                        </a>                                  
-                                    </div>
-                                    <div class="carousel-item">
-                                        <a class="lightbox" href="assets/home/images/JediJump/Screenshot 2023-03-16 210222.jpg">
-                                            <img src="assets/home/images/JediJump/Screenshot 2023-03-16 210222.jpg" alt="">
-                                        </a>                                  
-                                    </div>
-                                </div>
-                                <button class="carousel-control-prev" type="button" data-bs-target="#jedijump" data-bs-slide="prev">
-                                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                  <span class="visually-hidden">Previous</span>
-                                </button>
-                                <button class="carousel-control-next" type="button" data-bs-target="#jedijump" data-bs-slide="next">
-                                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                  <span class="visually-hidden">Next</span>
-                                </button>
-                              </div>
-                        </div>
-                        <!-- #ITEM 3 END -->
-
-                        <!-- #ITEM 4 START -->
-                        <div class="vlservices Lservices card mb-3">
-                            <div class="card-body">
-                                <h5 class="card-title">Java Swing IDE</h5>
-                                <h2 class="card-title fw-bolder">Gaussian Elimination Visualization</h2>
-                                <div class="lineDivider LlineDivider" aria-hidden="true"></div>
-                                <p class="card-text">The IDE visualization for Gaussian Elimination written in Java provides an interactive and user-friendly platform for students and developers to understand the algorithm behind Gaussian elimination, a popular method used for solving systems of linear equations. Through this IDE visualization, users can step through each stage of the algorithm, visually observing how the matrices are manipulated through each iteration until the solution is found.</p>
-                            </div>
-                        </div>
-                        <div class="slideshow">
-                            <div id="Gaussian" class="carousel slide" data-bs-ride="true">
-                                <div class="carousel-indicators">
-                                  <button type="button" data-bs-target="#Gaussian" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-                                  <button type="button" data-bs-target="#Gaussian" data-bs-slide-to="1" aria-label="Slide 2"></button>
-                                  <button type="button" data-bs-target="#Gaussian" data-bs-slide-to="2" aria-label="Slide 3"></button>
-                                </div>
-                                <div class="carousel-inner">
-                                    <div class="carousel-item active">
-                                        <a class="lightbox" href="assets/home/images/gaussian/Screenshot 2023-03-16 211415.jpg">
-                                            <img src="assets/home/images/gaussian/Screenshot 2023-03-16 211415.jpg" alt="">
-                                        </a>                                  
-                                    </div>
-                                    <div class="carousel-item">
-                                        <a class="lightbox" href="assets/home/images/gaussian/Screenshot 2023-03-16 211433.jpg">
-                                            <img src="assets/home/images/gaussian/Screenshot 2023-03-16 211433.jpg" alt="">
-                                        </a>                                  
-                                    </div>
-                                    <div class="carousel-item">
-                                        <a class="lightbox" href="assets/home/images/gaussian/Screenshot 2023-03-16 211438.jpg">
-                                            <img src="assets/home/images/gaussian/Screenshot 2023-03-16 211438.jpg" alt="">
-                                        </a>                                  
-                                    </div>
-                                </div>
-                                <button class="carousel-control-prev" type="button" data-bs-target="#Gaussian" data-bs-slide="prev">
-                                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                  <span class="visually-hidden">Previous</span>
-                                </button>
-                                <button class="carousel-control-next" type="button" data-bs-target="#Gaussian" data-bs-slide="next">
-                                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                  <span class="visually-hidden">Next</span>
-                                </button>
-                              </div>
-                        </div>
-                        <!-- #ITEM 4 END -->
-
-                        <!-- #ITEM 4 START -->
-                        <div class="vlservices Lservices card mb-3">
-                            <div class="card-body">
-                                <h5 class="card-title">Java Swing IDE</h5>
-                                <h2 class="card-title fw-bolder">Round Robin Visualization</h2>
-                                <div class="lineDivider LlineDivider" aria-hidden="true"></div>
-                                <p class="card-text">The Round Robin CPU Scheduling Visualization GUI is a powerful educational tool that allows students and professionals to visualize and interact with the Round Robin CPU Scheduling algorithm in a user-friendly and intuitive way. Through this GUI, users can easily adjust the time quantum, add and remove processes, and observe how the algorithm prioritizes and allocates CPU time to each process. This hands-on approach to learning helps users to better understand the intricacies of CPU scheduling and how different variables impact the performance of the system.</p>
-                            </div>
-                        </div>
-                        <div class="slideshow">
-                            <div id="roundRobin" class="carousel slide" data-bs-ride="true">
-                                <div class="carousel-indicators">
-                                  <button type="button" data-bs-target="#roundRobin" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-                                  <button type="button" data-bs-target="#roundRobin" data-bs-slide-to="1" aria-label="Slide 2"></button>
-                                  <button type="button" data-bs-target="#roundRobin" data-bs-slide-to="2" aria-label="Slide 3"></button>
-                                </div>
-                                <div class="carousel-inner">
-                                    <div class="carousel-item active">
-                                        <a class="lightbox" href="assets/home/images/RoundRobin/Screenshot 2023-03-16 211840.jpg">
-                                            <img src="assets/home/images/RoundRobin/Screenshot 2023-03-16 211840.jpg" alt="">
-                                        </a>                                  
-                                    </div>
-                                    <div class="carousel-item">
-                                        <a class="lightbox" href="assets/home/images/RoundRobin/Screenshot 2023-03-16 211857.jpg">
-                                            <img src="assets/home/images/RoundRobin/Screenshot 2023-03-16 211857.jpg" alt="">
-                                        </a>                                  
-                                    </div>
-                                    <div class="carousel-item">
-                                        <a class="lightbox" href="assets/home/images/RoundRobin/Screenshot 2023-03-16 211901.jpg">
-                                            <img src="assets/home/images/RoundRobin/Screenshot 2023-03-16 211901.jpg" alt="">
-                                        </a>                                  
-                                    </div>
-                                </div>
-                                <button class="carousel-control-prev" type="button" data-bs-target="#roundRobin" data-bs-slide="prev">
-                                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                  <span class="visually-hidden">Previous</span>
-                                </button>
-                                <button class="carousel-control-next" type="button" data-bs-target="#roundRobin" data-bs-slide="next">
-                                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                  <span class="visually-hidden">Next</span>
-                                </button>
-                              </div>
-                        </div>
-                        <!-- #ITEM 4 END -->
-                    </div>
-                    <!-- ### -->
-                </div>
-                
-                
-            </div>
-        </div>
-        <div id="right" class="slide">
-            <div class="right item">
-               <div class="content">
-                    <img class="image" src="assets/home/images/Creative sidemonster.svg" type=""></img>
-                    <span class="title rightText slide-in-right">CREATIVE</span>
-                    <span class="title centerText RcenterText none">CREATIVE</span>
-                    <div class="arrow">
-                        <span class="arr arr1"></span>
-                        <span class="arr arr2"></span>
-                        <span class="arr arr3"></span>
-                    </div>
-                    <!-- ### -->
-                    <div class="portfolioContent">
-                        <div class="services Rservices card mb-3">
-                            <div class="card-body">
-                                <h5 class="card-title">SKILLS</h5>
-                                <h2 class="card-title fw-bolder">WHAT DO I DO?</h2>
-                                <div class="lineDivider RlineDivider" aria-hidden="true"></div>
-                                <p class="card-text">As my hobby, I have a creative side on which I express my emotion and passion</p>
-                            </div>
-                        </div>
-                        <div class="services Rservices card mb-3">
-                            <div class="card-body">
-                                <span class="icons material-symbols-outlined">border_color</span>
-                                <h5 class="card-title fw-bolder">SOFTWARES</h5>
-                                <div class="lineDivider RlineDivider" aria-hidden="true"></div>
-                                <p class="card-text">Proficient in <b>Photoshop</b>, have experience in adobe <b>Premiere</b> and <b>After Effects</b></p>
-                                <p>I mainly use Photoshop as my tool for Creativity, but I can use gimp and procreate as well</p>
-
-                            </div>
-                        </div>
-                        <div class="services Rservices card mb-3">
-                            <div class="card-body">
-                                <span class="icons material-symbols-outlined">palette</span>
-                                <h5 class="card-title fw-bolder">PASSION</h5>
-                                <div class="lineDivider RlineDivider" aria-hidden="true"></div>
-                                <p class="card-text">I do <b>Digital Arts</b>, <b>Traditional Painting</b>, <b>Sketching</b>, and <b>Line Arts</b> where my Digital arts
-                                can be found in my Instagram and Twitter</p>
-                                <span>Instagram: </span> <a href="https://www.instagram.com/ayemkewl/"> ayemkewl</a><br>
-                                <span>Twitter: </span> <a href="https://twitter.com/kewl_art"> kewl_art</a>
-                            </div>
-                        </div>
-
-                        <div class="services Rservices card mb-3">
-                            <div class="card-body">
-                                <span class="icons material-symbols-outlined">alternate_email</span>
-                                <h5 class="card-title fw-bolder">CONTACT</h5>
-                                <div class="lineDivider RlineDivider" aria-hidden="true"></div>
-                                <p class="card-text">
-                                <span>Linkedin: </span> <a href="https://www.linkedin.com/in/kenji-shimizu-07798b130/"> Kenji Shimizu</a><br>
-                                <span>Email: </span> kenjishimizu.dev@gmail.com<br>
-                                <span>Contact #: </span> +63 917 502 8874<br>
-                            </div>
-                        </div>
-                        
-                    </div>
-                    <div class="portfolioContentvl">
-
-                            <div class="tz-gallery">
-                        
-                                <div class="row">
-                                    <div class="col-lg-12 col-xl-4">
-                                        <a class="lightbox" href="assets/home/images/deminWoman.jpg">
-                                            <img src="assets/home/images/deminWoman.jpg" alt="">
-                                        </a>
-                                    </div>
-                                    <div class="col-lg-6 col-xl-4">
-                                        <a class="lightbox" href="assets/home/images/baroque1.jpg">
-                                            <img src="assets/home/images/baroque1.jpg" alt="">
-                                        </a>
-                                    </div>
-                                    <div class="col-lg-6 col-xl-4">
-                                        <a class="lightbox" href="assets/home/images/bookhat.jpg">
-                                            <img src="assets/home/images/bookhat.jpg" alt="">
-                                        </a>
-                                    </div>
-                                    <div class="multiRow col-lg-12 col-xl-4">
-                                        
-                                        <div class="col-lg-12 col-xl-12">
-                                            <a class="lightbox" href="assets/home/images/reading.jpg">
-                                                <img src="assets/home/images/reading.jpg" alt="">
-                                            </a>
-                                        </div>                         
-                                    
-                                   
-                                        <div class="col-lg-12 col-xl-12">
-                                            <a class="lightbox" href="assets/home/images/RedHatGirl.jpg">
-                                                <img src="assets/home/images/RedHatGirl.jpg" alt="">
-                                            </a>
-                                        </div>                         
-                                   
-                                    </div> 
-                                    <div class="col-lg-12 col-xl-8">
-                                        <a class="lightbox" href="assets/home/images/IG-keeptryingORwhybother.jpg">
-                                            <img src="assets/home/images/IG-keeptryingORwhybother.jpg" alt="">
-                                        </a>
-                                    </div>
-                                    
-                                    <div class="col-lg-12 col-xl-4">
-                                        <a class="lightbox" href="assets/home/images/suitGirl.jpg">
-                                            <img src="assets/home/images/suitGirl.jpg" alt="">
-                                        </a>
-                                    </div>
-                                    <div class="col-lg-6 col-xl-4">
-                                        <a class="lightbox" href="assets/home/images/girlFlower.jpg">
-                                            <img src="assets/home/images/girlFlower.jpg" alt="">
-                                        </a>
-                                    </div>
-                                    <div class="col-lg-6 col-xl-4">
-                                        <a class="lightbox" href="assets/home/images/samurai.jpg">
-                                            <img src="assets/home/images/samurai.jpg" alt="">
-                                        </a>
-                                    </div>
-                                    <div class="col-lg-12 col-xl-8">
-                                        <a class="lightbox" href="assets/home/images/IG-NightWalk.jpg">
-                                            <img src="assets/home/images/IG-NightWalk.jpg" alt="">
-                                        </a>
-                                    </div>
-                                    <div class="multiRow col-lg-12 col-xl-4">
-                                        
-                                            <div class="col-lg-12 col-xl-12">
-                                                <a class="lightbox" href="assets/home/images/Japanese girl.jpg">
-                                                    <img src="assets/home/images/Japanese girl.jpg" alt="">
-                                                </a>
-                                            </div>                         
-                                        
-                                       
-                                            <div class="col-lg-12 col-xl-12">
-                                                <a class="lightbox" href="assets/home/images/19th century 2.png">
-                                                    <img src="assets/home/images/IG-19th century.jpg" alt="">
-                                                </a>
-                                            </div>                         
-                                       
-                                    </div> 
-                                    
-                                </div>
-                        
-                            </div>
-                        
-        
-                          
-                    </div>
-                    <!-- ### -->
-                </div>
-                
-            </div>
-            
-        
-        </div>
-        <input type="range" id="slider" min="0" max="100" value="50">
-        <div id="slider-line" class="slider-line" aria-hidden="true"></div>
-        <div id="slider-button" class="slider-button">
-            <span class="material-symbols-outlined">
-                arrow_range
-            </span>
+    <!-- Loading Overlay -->
+    <div id="loading-overlay">
+        <div class="loader">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
         </div>
     </div>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.8.1/baguetteBox.min.js"></script>
-<script>
-    baguetteBox.run('.tz-gallery');
-    baguetteBox.run('#dhl');
-    baguetteBox.run('#mlp');
-    baguetteBox.run('#jedijump');
-    baguetteBox.run('#Gaussian');
-    baguetteBox.run('#roundRobin');
-</script>
-   
+
+    <!-- Main Slider Container -->
+    <main class="split-container" id="split-container">
+
+        <!-- Developer Side (Base/Left/Top) -->
+        <section class="side developer-side" id="developer-side">
+
+            <!-- Hero Section -->
+            <div class="hero dev-hero">
+                <div class="hero-content">
+                    <h1 class="glitch-text" data-text="DEVELOPER">DEVELOPER</h1>
+                    <p class="subtitle code-font">&lt;Building The Future /&gt;</p>
+                </div>
+                <!-- Interactive Canvas -->
+                <canvas id="canvas-dev" class="hero-canvas"></canvas>
+                <div class="scroll-indicator">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+
+            <div class="content-wrapper">
+                <div class="scroll-content" id="developer-content">
+                    <!-- Dynamic Content Loaded Here -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Creative Side (Overlay/Right/Bottom) -->
+        <section class="side creative-side" id="creative-side">
+
+            <!-- Mask Wrapper to prevent reflow -->
+            <div class="mask-wrapper">
+                <!-- Hero Section -->
+                <div class="hero creative-hero">
+                    <div class="hero-content">
+                        <h1 class="brush-text">Creative</h1>
+                        <p class="subtitle">Art is Chaos taking Shape</p>
+                    </div>
+                    <!-- Interactive Canvas -->
+                    <canvas id="canvas-creative" class="hero-canvas"></canvas>
+                    <div class="scroll-indicator">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                </div>
+
+                <div class="content-wrapper">
+                    <div class="scroll-content" id="creative-content">
+                        <!-- Dynamic Content Loaded Here -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slider Handle -->
+        <div class="handle" id="slider-handle">
+            <div class="handle-line"></div>
+            <div class="handle-circle">
+                <span class="arrow left">&larr;</span>
+                <span class="arrow right">&rarr;</span>
+                <span class="arrow up">&uarr;</span>
+                <span class="arrow down">&darr;</span>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.8.1/baguetteBox.min.js"></script>
+    <script src="assets/js/loader.js" type="module"></script>
+    <script src="assets/js/app.js" type="module"></script>
 </body>
+
 </html>

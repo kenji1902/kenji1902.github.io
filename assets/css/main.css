@@ -1,0 +1,692 @@
+:root {
+    /* Developer Theme (Dark) */
+    --dev-bg: #0a0a0a;
+    --dev-text: #e0e0e0;
+    --dev-accent: #00ff9d;
+    /* Neon Green */
+    --dev-secondary: #00bcd4;
+    /* Cyan */
+    --dev-font: 'Space Mono', monospace;
+
+    /* Creative Theme (Dark Mode Refined) */
+    --creative-bg: #111111;
+    /* Dark Grey */
+    --creative-text: #f0f0f0;
+    --creative-accent: #ff0055;
+    /* Hot Pink */
+    --creative-secondary: #ff9900;
+    /* Orange */
+    --creative-font: 'Outfit', sans-serif;
+    --creative-brush: 'Comforter Brush', cursive;
+
+    /* Common */
+    --handle-width: 4px;
+    --transition-speed: 0.3s;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    overflow-x: hidden;
+    /* Prevent horizontal scroll from full width elements */
+    overflow-y: auto;
+    /* Enable Body Scroll */
+    background: #000;
+    font-family: var(--creative-font);
+    min-height: 100vh;
+    width: 100vw;
+    user-select: none;
+    /* Disable text highlighting/selection */
+    -webkit-user-select: none;
+}
+
+/* Loading Overlay */
+#loading-overlay {
+    position: fixed;
+    inset: 0;
+    background: #000;
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: opacity 0.5s ease;
+}
+
+#loading-overlay.fade-out {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.loader .bar {
+    display: inline-block;
+    width: 6px;
+    height: 30px;
+    background: white;
+    margin: 0 2px;
+    animation: scale-up 1s infinite ease-in-out;
+}
+
+.loader .bar:nth-child(2) {
+    animation-delay: 0.1s;
+}
+
+.loader .bar:nth-child(3) {
+    animation-delay: 0.2s;
+}
+
+@keyframes scale-up {
+
+    0%,
+    100% {
+        transform: scaleY(1);
+    }
+
+    50% {
+        transform: scaleY(2);
+    }
+}
+
+
+/* Split Container */
+.split-container {
+    position: relative;
+    width: 100%;
+    /* Changed from 100vw to 100% to respect scrollbar */
+    min-height: 100vh;
+    height: auto;
+    overflow: hidden;
+}
+
+/* Sides */
+.side {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+    /* No internal scrolling */
+    overflow: hidden;
+}
+
+/* Developer Side (Base Layer) */
+.developer-side {
+    left: 0;
+    background: var(--dev-bg);
+    color: var(--dev-text);
+    z-index: 10;
+}
+
+/* Creative Side (Overlay Layer) - MASKING */
+.creative-side {
+    right: 0;
+    background: var(--creative-bg);
+    color: var(--creative-text);
+    z-index: 20;
+    width: 50%;
+    /* Initial split */
+    overflow: hidden;
+    /* Masking */
+    border-left: 2px solid #333;
+    will-change: clip-path, width;
+    /* Optimize for slider and mobile scroll */
+}
+
+/* Mask Wrapper inside Creative Side */
+/* Key to preventing reflow: width is always screen width */
+.mask-wrapper {
+    position: relative;
+    /* Scrolls with parent */
+    width: 100vw;
+    /* Always full viewport width */
+    margin-left: auto;
+    right: 0;
+    float: right;
+    min-height: 100%;
+    height: 100%;
+}
+
+
+/* Scrollbars */
+.side::-webkit-scrollbar {
+    width: 8px;
+}
+
+.side::-webkit-scrollbar-thumb {
+    background: #555;
+}
+
+.developer-side::-webkit-scrollbar-thumb {
+    background: var(--dev-accent);
+}
+
+.creative-side::-webkit-scrollbar-thumb {
+    background: var(--creative-accent);
+}
+
+
+/* HERO SECTIONS */
+.hero {
+    height: 100vh;
+    width: 100%;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.hero-content {
+    z-index: 5;
+    text-align: center;
+    padding: 2.5rem;
+    /* Increased padding for glass look */
+    pointer-events: none;
+    /* Let clicks pass to canvas */
+    position: absolute;
+    /* Absolute positioning for sliding */
+    transition: transform 0.1s linear;
+    width: auto;
+    max-width: 80%;
+
+    /* Glassmorphism / Blurry Background */
+    background: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+}
+
+/* Developer Hero Content - Align Left initially */
+.dev-hero .hero-content {
+    left: 10%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    white-space: nowrap;
+
+    /* Matching Creative Style */
+    text-shadow: 0 4px 20px rgba(0, 0, 0, 0.9);
+    background: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(4px);
+    padding: 2rem 3rem;
+    border-radius: 16px;
+    border: 1px solid rgba(0, 255, 157, 0.1);
+    /* Green tint for dev */
+}
+
+/* Creative Hero Content - Align Right initially */
+.creative-hero .hero-content {
+    right: 10%;
+    top: 50%;
+    transform: translate(50%, -50%);
+    white-space: nowrap;
+
+    /* Visibility Fix */
+    text-shadow: 0 4px 20px rgba(0, 0, 0, 0.9);
+    background: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(4px);
+    padding: 2rem 3rem;
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Canvas */
+.hero-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+
+/* Scroll Indicator (Triple Chevron - No Mouse) */
+.scroll-indicator {
+    position: absolute;
+    bottom: 50px;
+    left: 50%;
+    width: 60px;
+    height: auto;
+    z-index: 25;
+    pointer-events: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transform: translateX(-50%);
+
+    /* Glassmorphism Pill */
+    background: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    padding: 20px 0 40px 0;
+    /* Vertical breathing room */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+.scroll-indicator span {
+    display: block;
+    width: 30px;
+    height: 30px;
+    border-bottom: 3px solid #fff;
+    /* Pure White */
+    border-right: 3px solid #fff;
+    /* Pure White */
+    transform: rotate(45deg);
+    margin: -10px 0;
+    /* Stack closely */
+    animation: arrow-wave 1.5s infinite;
+    opacity: 0;
+}
+
+.scroll-indicator span:nth-child(1) {
+    animation-delay: 0s;
+}
+
+.scroll-indicator span:nth-child(2) {
+    animation-delay: 0.15s;
+}
+
+.scroll-indicator span:nth-child(3) {
+    animation-delay: 0.3s;
+}
+
+/* Clear legacy pseudo-elements */
+.scroll-indicator::after,
+.scroll-indicator::before {
+    display: none !important;
+}
+
+@keyframes arrow-wave {
+    0% {
+        opacity: 0;
+        transform: rotate(45deg) translate(-10px, -10px);
+    }
+
+    40% {
+        opacity: 1;
+        /* Full Opacity */
+    }
+
+    80% {
+        opacity: 0;
+        transform: rotate(45deg) translate(10px, 10px);
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+
+
+/* Developer Hero specific */
+.dev-hero {
+    background: var(--dev-bg);
+}
+
+/* Creative Hero specific */
+.creative-hero {
+    background: var(--creative-bg);
+}
+
+.brush-text {
+    font-family: var(--creative-brush);
+    font-size: 5rem;
+    color: var(--creative-accent);
+    line-height: 1;
+}
+
+
+/* Content Wrapper */
+.content-wrapper {
+    padding: 4rem 2rem;
+    max-width: 1000px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 2;
+}
+
+/* Slider Handle */
+.handle {
+    position: fixed;
+    top: 50%;
+    bottom: auto;
+    transform: translate(-50%, -50%);
+    /* Center exactly on the 2px border (which starts at 50%) */
+    /* Border is 2px wide. Center is at 1px offset. */
+    margin-left: 1px;
+
+    width: 60px;
+    height: 60px;
+    background: #fff;
+    border-radius: 50%;
+    z-index: 100;
+    cursor: col-resize;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+    border: 4px solid #000;
+
+    /* Disable Highlight */
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+    touch-action: none;
+    /* Prevent browser scrolling/zoom on handle */
+}
+
+.handle-circle {
+    width: 44px;
+    height: 44px;
+    background: #222;
+    border-radius: 50%;
+    border: 2px solid #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+    transition: transform 0.2s;
+    /* Desktop: Rotate -90deg so Up->Left, Down->Right */
+    transform: rotate(-90deg);
+}
+
+.handle:hover .handle-circle {
+    /* Maintain rotation + scale */
+    transform: rotate(-90deg) scale(1.1);
+}
+
+.handle .arrow {
+    font-size: 1.2rem;
+    line-height: 1;
+    /* Fix vertical alignment */
+    margin: 0 1px;
+    /* Minimal spacing */
+    display: inline-block;
+    /* Allow transform if needed */
+}
+
+/* Hide specific Left/Right classes globally */
+.handle .arrow.left,
+.handle .arrow.right {
+    display: none;
+}
+
+/* Show Up/Down globally (Desktop gets rotation) */
+.handle .arrow.up,
+.handle .arrow.down {
+    display: inline-block;
+}
+
+
+
+
+/* TYPOGRAPHY elements ... reused from previous */
+.developer-side h1.glitch-text {
+    font-family: var(--dev-font);
+    font-size: 4rem;
+    font-weight: 700;
+    color: var(--dev-accent);
+    text-transform: uppercase;
+    letter-spacing: -2px;
+    margin-bottom: 0.5rem;
+}
+
+.glitch-text {
+    position: relative;
+}
+
+.glitch-text::before,
+.glitch-text::after {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--dev-bg);
+}
+
+.glitch-text::before {
+    left: 2px;
+    text-shadow: -1px 0 red;
+    clip: rect(44px, 450px, 56px, 0);
+    animation: glitch-anim-1 5s infinite linear alternate-reverse;
+}
+
+.glitch-text::after {
+    left: -2px;
+    text-shadow: -1px 0 blue;
+    clip: rect(44px, 450px, 56px, 0);
+    animation: glitch-anim-2 5s infinite linear alternate-reverse;
+}
+
+@keyframes glitch-anim-1 {
+    0% {
+        clip: rect(20px, 9999px, 10px, 0);
+    }
+
+    100% {
+        clip: rect(70px, 9999px, 30px, 0);
+    }
+}
+
+@keyframes glitch-anim-2 {
+    0% {
+        clip: rect(90px, 9999px, 100px, 0);
+    }
+
+    100% {
+        clip: rect(20px, 9999px, 50px, 0);
+    }
+}
+
+.code-font {
+    font-family: var(--dev-font);
+    color: var(--dev-secondary);
+}
+
+.developer-side .card {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(0, 255, 157, 0.2);
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    border-radius: 8px;
+    transition: all 0.3s;
+}
+
+.developer-side .card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 20px rgba(0, 255, 157, 0.2);
+    border-color: var(--dev-accent);
+}
+
+.creative-side .subtitle {
+    font-family: var(--creative-font);
+    font-weight: 300;
+    font-size: 1.5rem;
+    letter-spacing: 2px;
+    color: #ccc;
+}
+
+/* Gallery Grid */
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1.5rem;
+}
+
+.gallery-item {
+    position: relative;
+    overflow: hidden;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s;
+    cursor: pointer;
+}
+
+.gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s;
+    display: block;
+}
+
+.gallery-item:hover img {
+    transform: scale(1.05);
+}
+
+.skill-tag {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    margin: 0.25rem;
+    border: 1px solid currentColor;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    font-family: var(--dev-font);
+}
+
+.dev-skill {
+    color: var(--dev-secondary);
+    border-color: rgba(0, 188, 212, 0.3);
+}
+
+.project-card {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.project-images {
+    display: flex;
+    gap: 1rem;
+    overflow-x: auto;
+    padding-bottom: 1rem;
+    scrollbar-width: thin;
+    scrollbar-color: var(--dev-accent) transparent;
+}
+
+.project-images img {
+    height: 150px;
+    border-radius: 4px;
+    border: 1px solid #333;
+}
+
+
+/* RESPONSIVE VERTICAL SLIDER (Mobile) */
+@media (max-width: 768px) {
+
+    .side {
+        width: 100% !important;
+    }
+
+    .developer-side {
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 100%;
+    }
+
+    .creative-side {
+        top: auto;
+        bottom: 0;
+        right: 0;
+        left: 0;
+        height: 50%;
+        width: 100%;
+        border-left: none;
+        border-top: 2px solid #333;
+    }
+
+    .mask-wrapper {
+        width: 100% !important;
+        /* On mobile, we might not need masking the same way if width is full */
+        /* Wait, if width is 100%, we don't have side-by-side reflow issues. */
+        /* But vertical height changes? */
+        /* If height changes, creating a "Reveal from bottom". */
+        /* Content should be bottom aligned or top aligned? */
+        /* If content moves, it's annoying. */
+        /* Mask wrapper: height 100vh, margin-top: auto? */
+        height: 100vh;
+        width: 100%;
+        margin-left: 0;
+        /* Anchor to bottom? */
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        /* If parent height shrinks, we see Top of parent? */
+        /* Parent is aligned bottom: 0. */
+        /* So we see the TOP of the content which is cut off? */
+        /* No, if parent is bottom: 0, we see the Top of the parent, which is the "split line". */
+        /* The content inside is `top: 0` inside the parent. */
+        /* So we see the Top of the Content. */
+        /* As dragging UP -> Parent height increases -> Reveal more content (downwards). */
+        /* This is logic for "Pulling up a sheet from bottom". */
+        /* This is usually acceptable. Reflow isn't an issue verticaly usually unless it centers. */
+    }
+
+    /* Handle Rotation */
+    .handle {
+        top: auto;
+        bottom: 50%;
+        left: 0;
+        right: 0;
+        width: 100%;
+        height: var(--handle-width);
+        transform: translateY(50%);
+        cursor: row-resize;
+    }
+
+    /* Handle Rotation reset for Mobile (Vertical) */
+    .handle-circle {
+        transform: none;
+    }
+
+    /* FIX MOBILE ICONS: Ensure Up/Down are visible (Default is now visible) */
+    .handle .arrow.left,
+    .handle .arrow.right {
+        display: none !important;
+    }
+
+    .handle .arrow.up,
+    .handle .arrow.down {
+        display: inline-block !important;
+    }
+
+    /* Center overrides... */
+    .dev-hero .scroll-indicator,
+    .creative-hero .scroll-indicator {
+        left: 50% !important;
+    }
+
+    .hero-content h1 {
+        font-size: 2.5rem !important;
+    }
+
+    /* Force Center Headers on Mobile */
+    .dev-hero .hero-content,
+    .creative-hero .hero-content {
+        left: 50% !important;
+        right: auto !important;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        opacity: 1;
+        /* Allow JS to fade it */
+        text-align: center;
+        width: 90%;
+        /* prevent overflow */
+        white-space: normal;
+        /* Allow wrapping on small screens */
+    }
+
+    .content-wrapper {
+        padding: 2rem 1rem;
+    }
+}

@@ -1,0 +1,152 @@
+{
+    "profile": {
+        "name": "Kenji Shimizu",
+        "links": {
+            "github": "https://github.com/kenji1902",
+            "linkedin": "https://www.linkedin.com/in/kenji-shimizu-07798b130/",
+            "instagram": "https://www.instagram.com/ayemkewl/",
+            "twitter": "https://twitter.com/kewl_art",
+            "email": "mailto:kenjishimizu.dev@gmail.com"
+        },
+        "contact": {
+            "email": "kenjishimizu.dev@gmail.com",
+            "phone": "+63 917 502 8874"
+        }
+    },
+    "developer": {
+        "title": "DEVELOPER",
+        "description": "As a graduate of Computer Science with specialization of Software Engineering, I have a strong foundation in the principles and practices of software development.",
+        "skills": [
+            "C#",
+            "C++",
+            "Django",
+            "Java",
+            "Machine Learning",
+            "Neural Networks",
+            "Python",
+            "Php",
+            "Javascript",
+            "HTML",
+            "CSS",
+            "SQL"
+        ],
+        "projects": [
+            {
+                "title": "Invasive Plants Classifier",
+                "subtitle": "Deep Hybrid Learning",
+                "description": "This software aims to tackle the issue of invasive plants in the Philippines by using a combination of machine learning techniques. It utilizes Convolutional Neural Network (CNN) and K-Nearest Neighbor (KNN) classifiers to accurately classify selected invasive plant species, helping to reduce their ecological and economic impact.",
+                "images": [
+                    "assets/home/images/iasClassifier/System Architecture.jpg",
+                    "assets/home/images/iasClassifier/Screenshot 2023-03-16 201300.jpg",
+                    "assets/home/images/iasClassifier/Screenshot 2023-03-16 201445.jpg",
+                    "assets/home/images/iasClassifier/Screenshot 2023-03-16 201449.jpg",
+                    "assets/home/images/iasClassifier/Screenshot 2023-03-16 201519.jpg",
+                    "assets/home/images/iasClassifier/Screenshot 2023-03-16 201553.jpg",
+                    "assets/home/images/iasClassifier/Screenshot 2023-03-16 201622.jpg"
+                ]
+            },
+            {
+                "title": "MLP Feed Forward Neural Network",
+                "subtitle": "Multilayer perceptron",
+                "description": "An MLP FNN Lecture Demonstration from Simple model to Custom Complex Model that uses Sample Iris Dataset From Training. This Lecture was used to teach the basics of MLP up to the complex custom MLP model",
+                "images": [
+                    "assets/home/images/MLP/Screenshot 2023-03-16 205101.jpg",
+                    "assets/home/images/MLP/Screenshot 2023-03-16 205126.jpg"
+                ]
+            },
+            {
+                "title": "JediJump",
+                "subtitle": "Game Development using Libgdx",
+                "description": "1 week project that is a 2-D infinite Jumping game that challenges players to jump through various obstacles and platforms while avoiding dangerous enemies and collecting power-ups to enhance their abilities. The game requires a deep understanding of programming concepts such as object-oriented programming, data structures, algorithms, and game mechanics",
+                "images": [
+                    "assets/home/images/JediJump/Screenshot 2023-03-16 210156.jpg",
+                    "assets/home/images/JediJump/Screenshot 2023-03-16 210211.jpg",
+                    "assets/home/images/JediJump/Screenshot 2023-03-16 210217.jpg",
+                    "assets/home/images/JediJump/Screenshot 2023-03-16 210212.jpg"
+                ]
+            },
+            {
+                "title": "Gaussian Elimination Visualization",
+                "subtitle": "Java Swing IDE",
+                "description": "The IDE visualization for Gaussian Elimination written in Java provides an interactive and user-friendly platform for students and developers to understand the algorithm behind Gaussian elimination, a popular method used for solving systems of linear equations. Through this IDE visualization, users can step through each stage of the algorithm, visually observing how the matrices are manipulated through each iteration until the solution is found.",
+                "images": [
+                    "assets/home/images/gaussian/Screenshot 2023-03-16 211415.jpg",
+                    "assets/home/images/gaussian/Screenshot 2023-03-16 211433.jpg",
+                    "assets/home/images/gaussian/Screenshot 2023-03-16 211438.jpg"
+                ]
+            },
+            {
+                "title": "Round Robin Visualization",
+                "subtitle": "Java Swing IDE",
+                "description": "The Round Robin CPU Scheduling Visualization GUI is a powerful educational tool that allows students and professionals to visualize and interact with the Round Robin CPU Scheduling algorithm in a user-friendly and intuitive way. Through this GUI, users can easily adjust the time quantum, add and remove processes, and observe how the algorithm prioritizes and allocates CPU time to each process. This hands-on approach to learning helps users to better understand the intricacies of CPU scheduling and how different variables impact the performance of the system.",
+                "images": [
+                    "assets/home/images/RoundRobin/Screenshot 2023-03-16 211840.jpg",
+                    "assets/home/images/RoundRobin/Screenshot 2023-03-16 211857.jpg",
+                    "assets/home/images/RoundRobin/Screenshot 2023-03-16 211901.jpg"
+                ]
+            }
+        ]
+    },
+    "creative": {
+        "title": "CREATIVE",
+        "description": "As my hobby, I have a creative side on which I express my emotion and passion",
+        "softwares": [
+            "Photoshop",
+            "Premiere",
+            "After Effects",
+            "Gimp",
+            "Procreate"
+        ],
+        "software_description": "I mainly use Photoshop as my tool for Creativity, but I can use gimp and procreate as well",
+        "passion": "I do Digital Arts, Traditional Painting, Sketching, and Line Arts where my Digital arts can be found in my Instagram and Twitter",
+        "gallery": [
+            "assets/home/images/deminWoman.jpg",
+            "assets/home/images/baroque1.jpg",
+            "assets/home/images/bookhat.jpg",
+            "assets/home/images/reading.jpg",
+            "assets/home/images/RedHatGirl.jpg",
+            "assets/home/images/IG-keeptryingORwhybother.jpg",
+            "assets/home/images/suitGirl.jpg",
+            "assets/home/images/girlFlower.jpg",
+            "assets/home/images/samurai.jpg",
+            "assets/home/images/IG-NightWalk.jpg",
+            "assets/home/images/Japanese girl.jpg",
+            "assets/home/images/19th century 2.png"
+        ]
+    },
+    "heroConfig": {
+        "developer": {
+            "image": "assets/home/images/hero_bw.png",
+            "particleSize": 10,
+            "gap": 10,
+            "mouseForce": 80,
+            "friction": 0.9,
+            "ease": 0.1,
+            "color": "#00ff9d",
+            "charSet": "01",
+            "type": "matrix"
+        },
+        "creative": {
+            "image": "assets/home/images/hero_bw.png",
+            "particleSize": 10,
+            "gap": 10,
+            "mouseForce": 60,
+            "friction": 0.9,
+            "ease": 0.1,
+            "colors": [
+                "#ff0055",
+                "#ff9900",
+                "#00bcd4",
+                "#ffffff"
+            ],
+            "type": "galaxy",
+            "spiralTension": 0.5,
+            "spiralSpeed": 0.02,
+            "interactionRadius": 250,
+            "returnEase": 0.0002,
+            "suctionEase": 0.997,
+            "hotColor": "#ffdd40",
+            "maxParticleSize": 80
+        }
+    }
+}
