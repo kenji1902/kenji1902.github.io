@@ -79,7 +79,7 @@ function renderDeveloper(data) {
 
     // Markdown Section (Loading from about.md)
     const markdownSection = document.createElement('div');
-    markdownSection.className = 'card markdown-content';
+    markdownSection.className = 'card markdown-section';
     markdownSection.innerHTML = '<p style="color: #666; font-style: italic;">Loading additional info...</p>';
     container.appendChild(markdownSection);
 
@@ -89,11 +89,41 @@ function renderDeveloper(data) {
             return response.text();
         })
         .then(mdText => {
+            let htmlContent = '';
             if (window.marked) {
-                markdownSection.innerHTML = marked.parse(mdText);
+                htmlContent = marked.parse(mdText);
             } else {
-                markdownSection.innerHTML = `<pre>${mdText}</pre>`;
+                htmlContent = `<pre>${mdText}</pre>`;
             }
+
+            markdownSection.innerHTML = `
+                <div class="markdown-wrapper collapsed">
+                    <div class="markdown-content">${htmlContent}</div>
+                </div>
+                <button class="read-more-btn">Read More</button>
+            `;
+
+            const wrapper = markdownSection.querySelector('.markdown-wrapper');
+            const btn = markdownSection.querySelector('.read-more-btn');
+
+            btn.addEventListener('click', () => {
+                const isCollapsed = wrapper.classList.contains('collapsed');
+                if (isCollapsed) {
+                    wrapper.classList.remove('collapsed');
+                    wrapper.classList.add('expanded');
+                    btn.textContent = 'Read Less';
+                } else {
+                    wrapper.classList.add('collapsed');
+                    wrapper.classList.remove('expanded');
+                    btn.textContent = 'Read More';
+
+                    // Optional: scroll back to the section top when collapsing
+                    markdownSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+
+                // Trigger height update for scroll sync
+                if (window.updateHeight) window.updateHeight();
+            });
         })
         .catch(err => {
             console.warn('Markdown load failed:', err);

@@ -738,6 +738,62 @@ body {
     color: #fff;
 }
 
+/* Expandable Markdown Section */
+.markdown-section {
+    position: relative;
+}
+
+.markdown-wrapper {
+    position: relative;
+    transition: max-height 0.5s ease-in-out;
+    overflow: hidden;
+}
+
+.markdown-wrapper.collapsed {
+    max-height: 400px;
+    /* Target size to match other cards */
+}
+
+.markdown-wrapper.collapsed::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100px;
+    background: linear-gradient(transparent, var(--dev-bg));
+    pointer-events: none;
+    transition: opacity 0.3s;
+}
+
+.markdown-wrapper.expanded {
+    max-height: 5000px;
+    /* Fallback large height for transition */
+}
+
+.read-more-btn {
+    background: transparent;
+    border: 1px solid var(--dev-accent);
+    color: var(--dev-accent);
+    padding: 0.6rem 1.2rem;
+    border-radius: 30px;
+    cursor: pointer;
+    font-family: inherit;
+    font-weight: 600;
+    font-size: 0.9rem;
+    margin-top: 1.5rem;
+    transition: all 0.3s;
+    display: inline-block;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.read-more-btn:hover {
+    background: var(--dev-accent);
+    color: #000;
+    box-shadow: 0 0 15px rgba(0, 255, 157, 0.4);
+}
+
 /* ART HIGHLIGHT STYLES */
 .highlight-card {
     display: flex;
