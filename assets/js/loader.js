@@ -77,6 +77,29 @@ function renderDeveloper(data) {
     `;
     container.appendChild(skillsSection);
 
+    // Markdown Section (Loading from about.md)
+    const markdownSection = document.createElement('div');
+    markdownSection.className = 'card markdown-content';
+    markdownSection.innerHTML = '<p style="color: #666; font-style: italic;">Loading additional info...</p>';
+    container.appendChild(markdownSection);
+
+    fetch('./about.md')
+        .then(response => {
+            if (!response.ok) throw new Error('Markdown not found');
+            return response.text();
+        })
+        .then(mdText => {
+            if (window.marked) {
+                markdownSection.innerHTML = marked.parse(mdText);
+            } else {
+                markdownSection.innerHTML = `<pre>${mdText}</pre>`;
+            }
+        })
+        .catch(err => {
+            console.warn('Markdown load failed:', err);
+            markdownSection.remove(); // Hide if not available
+        });
+
     // Projects Section
     data.projects.forEach(project => {
         const projectCard = document.createElement('div');
