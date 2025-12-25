@@ -106,6 +106,7 @@ class GalaxyParticle extends Particle {
         this.baseSize = this.size;
         this.active = true;
         this.payload = []; // Stores absorbed particles
+        this.proximity = 0; // 0 to 1 based on mouse distance
     }
 
     update() {
@@ -148,6 +149,7 @@ class GalaxyParticle extends Particle {
             const g = this.baseRgb.g + (this.hotRgb.g - this.baseRgb.g) * ratio;
             const b = this.baseRgb.b + (this.hotRgb.b - this.baseRgb.b) * ratio;
 
+            this.proximity = ratio;
             this.color = `rgb(${Math.floor(r)}, ${Math.floor(g)}, ${Math.floor(b)})`;
 
             // ... (Physics Logic) ...
@@ -205,6 +207,7 @@ class GalaxyParticle extends Particle {
             // Actually, just set it back to base color string (assuming hex or whatever logic).
             // But we stored base RGB.
             this.color = `rgb(${this.baseRgb.r}, ${this.baseRgb.g}, ${this.baseRgb.b})`;
+            this.proximity = 0;
 
             // REVERSIBLE FUSION: Release Payload (BIG BANG)
             if (this.payload.length > 0) {
@@ -239,8 +242,8 @@ class GalaxyParticle extends Particle {
             this.vy += homeForceY;
         }
 
-        // Flash decay
-        if (this.flash > 0) this.flash -= 0.05;
+        // Flash decay (Gamma Explosion)
+        if (this.flash > 0) this.flash -= 0.03; // Slightly slower decay (was 0.05)
         if (this.flash < 0) this.flash = 0;
 
         // Friction applies to all velocity
@@ -253,25 +256,59 @@ class GalaxyParticle extends Particle {
 
     draw(context) {
         if (!this.active) return;
-        if (this.flash > 0) {
-            context.fillStyle = this.flash > 0.5 ? '#ffffff' : this.color;
-            // Or true blending if performance allows, but ternary is faster for "flash"
-            // Let's do a simple overlay logic:
-            if (this.flash > 0.1) {
-                context.save();
-                context.fillStyle = '#ffffff';
-                context.globalAlpha = this.flash;
-                context.beginPath();
-                context.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                context.fill();
-                context.restore();
-            }
-        }
 
+        // 1. Draw Particle Body First
         context.fillStyle = this.color;
         context.beginPath();
         context.arc(this.x, this.y, this.size, 0, Math.PI * 2);
         context.fill();
+
+        // 2. Draw Constant Glow (if near mouse)
+        if (this.proximity > 0) {
+            context.save();
+            context.globalCompositeOperation = 'lighter';
+
+            const glowScale = this.effect.config.glowScale || 2.5;
+            const glowOpacity = this.effect.config.glowOpacity || 0.4;
+
+            const glowSize = this.size * glowScale;
+            const grad = context.createRadialGradient(this.x, this.y, 0, this.x, this.y, glowSize);
+            grad.addColorStop(0, this.color);
+            grad.addColorStop(1, 'transparent');
+
+            context.fillStyle = grad;
+            context.globalAlpha = this.proximity * glowOpacity;
+            context.beginPath();
+            context.arc(this.x, this.y, glowSize, 0, Math.PI * 2);
+            context.fill();
+            context.restore();
+        }
+
+        // 3. Draw Gamma Explosion On Top (if merging)
+        if (this.flash > 0) {
+            context.save();
+            context.globalCompositeOperation = 'lighter';
+
+            // Configurable parameters
+            const flashColor = this.effect.config.flashColor || '#ffffff';
+            const sizeMult = this.effect.config.flashSizeMultiplier || 4;
+
+            // Draw expanding shockwave/flare
+            const flareSize = this.size * (1 + this.flash * sizeMult);
+            const gradient = context.createRadialGradient(this.x, this.y, 0, this.x, this.y, flareSize);
+
+            // Stronger center for flashColor
+            gradient.addColorStop(0, flashColor);
+            gradient.addColorStop(0.3, this.color); // Transition to particle color
+            gradient.addColorStop(1, 'transparent');
+
+            context.fillStyle = gradient;
+            context.globalAlpha = Math.min(this.flash, 1.0);
+            context.beginPath();
+            context.arc(this.x, this.y, flareSize, 0, Math.PI * 2);
+            context.fill();
+            context.restore();
+        }
     }
 }
 
@@ -427,9 +464,10 @@ export class Effect {
             const d1Sq = dx1 * dx1 + dy1 * dy1;
             if (d1Sq > sqRadius) continue;
 
-            // CORE FUSION: Only merge if close to center (e.g. < 50px)
+            // CORE FUSION: Only merge if close to center
             // This prevents the whole cloud from clumping
-            if (d1Sq > 2500) continue; // 50 * 50
+            const fusionRadius = this.config.fusionRadius || 50;
+            if (d1Sq > fusionRadius * fusionRadius) continue;
 
             for (let j = i + 1; j < this.particles.length; j++) {
                 const p2 = this.particles[j];
@@ -459,14 +497,15 @@ export class Effect {
                         survivor.size = Math.min(newAreaRadius, maxSize);
                     }
 
-                    survivor.flash = 1.0; // Explosion effect
+                    const m1 = survivor.size * survivor.size;
+                    const m2 = victim.size * victim.size;
+                    const intensity = (this.config.flashIntensityMultiplier || 1) * (m2 / 10);
+                    survivor.flash = Math.min(survivor.flash + intensity, 2.0); // Cumulative flash
+
                     victim.active = false; // Dormant
                     survivor.payload.push(victim);
 
                     // Momentum Conservation (Mass-weighted)
-                    // larger particles are harder to move.
-                    const m1 = survivor.size * survivor.size;
-                    const m2 = victim.size * victim.size;
                     const totalMass = m1 + m2;
 
                     survivor.vx = (survivor.vx * m1 + victim.vx * m2) / totalMass;
