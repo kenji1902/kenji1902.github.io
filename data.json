@@ -147,7 +147,7 @@
             "spiralTension": 0.5,
             "spiralSpeed": 0.02,
             "interactionRadius": 250,
-            "returnEase": 0.0002,
+            "returnEase": 0.0009,
             "suctionEase": 0.997,
             "suctionGradient": 0.005,
             "pullGradient": 0.1009,
