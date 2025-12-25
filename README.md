@@ -1,4 +1,4 @@
-# Portfolio.io - Configuration Guide
+# Portfolio - Configuration Guide
 
 This portfolio is dynamically driven by `data.json`. You can customize everything from your personal info to the advanced physics of the background particle effects.
 
