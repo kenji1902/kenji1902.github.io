@@ -145,7 +145,7 @@
             ],
             "type": "galaxy",
             "spiralTension": 0.5,
-            "spiralSpeed": 0.02,
+            "spiralSpeed": 0.03,
             "interactionRadius": 250,
             "returnEase": 0.0009,
             "suctionEase": 0.997,
