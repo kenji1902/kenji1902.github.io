@@ -150,7 +150,11 @@ class GalaxyParticle extends Particle {
             const b = this.baseRgb.b + (this.hotRgb.b - this.baseRgb.b) * ratio;
 
             this.proximity = ratio;
-            this.color = `rgb(${Math.floor(r)}, ${Math.floor(g)}, ${Math.floor(b)})`;
+            // Quantize colors to improve cache hits (16 steps)
+            const qr = Math.round(r / 16) * 16;
+            const qg = Math.round(g / 16) * 16;
+            const qb = Math.round(b / 16) * 16;
+            this.color = `rgb(${qr}, ${qg}, ${qb})`;
 
             // ... (Physics Logic) ...
             const mouseForce = this.effect.config.mouseForce || 60;
@@ -265,48 +269,54 @@ class GalaxyParticle extends Particle {
 
         // 2. Draw Constant Glow (if near mouse)
         if (this.proximity > 0) {
-            context.save();
-            context.globalCompositeOperation = 'lighter';
-
             const glowScale = this.effect.config.glowScale || 2.5;
             const glowOpacity = this.effect.config.glowOpacity || 0.4;
-
             const glowSize = this.size * glowScale;
-            const grad = context.createRadialGradient(this.x, this.y, 0, this.x, this.y, glowSize);
-            grad.addColorStop(0, this.color);
-            grad.addColorStop(1, 'transparent');
 
-            context.fillStyle = grad;
+            context.save();
+            context.globalCompositeOperation = 'lighter';
             context.globalAlpha = this.proximity * glowOpacity;
-            context.beginPath();
-            context.arc(this.x, this.y, glowSize, 0, Math.PI * 2);
-            context.fill();
+
+            // Use pre-rendered gradient if available
+            const glowCanvas = this.effect.getPreRenderedGradient(this.color, glowSize, 'glow');
+            if (glowCanvas) {
+                context.drawImage(glowCanvas, this.x - glowSize, this.y - glowSize, glowSize * 2, glowSize * 2);
+            } else {
+                const grad = context.createRadialGradient(this.x, this.y, 0, this.x, this.y, glowSize);
+                grad.addColorStop(0, this.color);
+                grad.addColorStop(1, 'transparent');
+                context.fillStyle = grad;
+                context.beginPath();
+                context.arc(this.x, this.y, glowSize, 0, Math.PI * 2);
+                context.fill();
+            }
             context.restore();
         }
 
         // 3. Draw Gamma Explosion On Top (if merging)
         if (this.flash > 0) {
-            context.save();
-            context.globalCompositeOperation = 'lighter';
-
-            // Configurable parameters
             const flashColor = this.effect.config.flashColor || '#ffffff';
             const sizeMult = this.effect.config.flashSizeMultiplier || 4;
-
-            // Draw expanding shockwave/flare
             const flareSize = this.size * (1 + this.flash * sizeMult);
-            const gradient = context.createRadialGradient(this.x, this.y, 0, this.x, this.y, flareSize);
 
-            // Stronger center for flashColor
-            gradient.addColorStop(0, flashColor);
-            gradient.addColorStop(0.3, this.color); // Transition to particle color
-            gradient.addColorStop(1, 'transparent');
-
-            context.fillStyle = gradient;
+            context.save();
+            context.globalCompositeOperation = 'lighter';
             context.globalAlpha = Math.min(this.flash, 1.0);
-            context.beginPath();
-            context.arc(this.x, this.y, flareSize, 0, Math.PI * 2);
-            context.fill();
+
+            // Use pre-rendered gradient if available
+            const flashCanvas = this.effect.getPreRenderedGradient(this.color, flareSize, 'flash', flashColor);
+            if (flashCanvas) {
+                context.drawImage(flashCanvas, this.x - flareSize, this.y - flareSize, flareSize * 2, flareSize * 2);
+            } else {
+                const gradient = context.createRadialGradient(this.x, this.y, 0, this.x, this.y, flareSize);
+                gradient.addColorStop(0, flashColor);
+                gradient.addColorStop(0.3, this.color);
+                gradient.addColorStop(1, 'transparent');
+                context.fillStyle = gradient;
+                context.beginPath();
+                context.arc(this.x, this.y, flareSize, 0, Math.PI * 2);
+                context.fill();
+            }
             context.restore();
         }
     }
@@ -327,11 +337,77 @@ export class Effect {
 
         window.addEventListener('mousemove', e => {
             const rect = this.canvas.getBoundingClientRect();
-            this.mouse.x = e.clientX - rect.left;
-            this.mouse.y = e.clientY - rect.top;
+            // Use clientX/Y and scale based on CSS vs Canvas size
+            const scaleX = this.canvas.width / rect.width;
+            const scaleY = this.canvas.height / rect.height;
+            this.mouse.x = (e.clientX - rect.left) * scaleX;
+            this.mouse.y = (e.clientY - rect.top) * scaleY;
         });
 
         this.init();
+
+        // Optimization: Gradient Cache
+        this.gradientCache = new Map();
+
+        // Optimization: Spatial Partitioning Grid
+        this.gridSize = 60; // Slightly larger grid for fewer cells
+        this.grid = [];
+    }
+
+    getPreRenderedGradient(color, radius, type, flashColor = '#ffffff') {
+        const qRadius = Math.ceil(radius / 10) * 10; // Coarser quantization
+        const cacheKey = `${color}-${qRadius}-${type}-${flashColor}`;
+
+        if (this.gradientCache.has(cacheKey)) {
+            return this.gradientCache.get(cacheKey);
+        }
+
+        // Limit cache size - much larger limit if needed, but quantization helps more
+        if (this.gradientCache.size > 500) {
+            const firstKey = this.gradientCache.keys().next().value;
+            this.gradientCache.delete(firstKey);
+        }
+
+        const canvas = document.createElement('canvas');
+        canvas.width = qRadius * 2;
+        canvas.height = qRadius * 2;
+        const ctx = canvas.getContext('2d', { alpha: true }); // Ensure alpha
+
+        const grad = ctx.createRadialGradient(qRadius, qRadius, 0, qRadius, qRadius, qRadius);
+        if (type === 'glow') {
+            grad.addColorStop(0, color);
+            grad.addColorStop(1, 'transparent');
+        } else if (type === 'flash') {
+            grad.addColorStop(0, flashColor);
+            grad.addColorStop(0.3, color);
+            grad.addColorStop(1, 'transparent');
+        }
+
+        ctx.fillStyle = grad;
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        this.gradientCache.set(cacheKey, canvas);
+        return canvas;
+    }
+
+    updateGrid() {
+        this.grid = [];
+        const cols = Math.ceil(this.width / this.gridSize);
+        const rows = Math.ceil(this.height / this.gridSize);
+
+        for (let i = 0; i < this.particles.length; i++) {
+            const p = this.particles[i];
+            if (!p.active) continue;
+
+            const col = Math.floor(p.x / this.gridSize);
+            const row = Math.floor(p.y / this.gridSize);
+
+            if (col >= 0 && col < cols && row >= 0 && row < rows) {
+                const index = row * cols + col;
+                if (!this.grid[index]) this.grid[index] = [];
+                this.grid[index].push(p);
+            }
+        }
     }
 
     hexToRgb(hex) {
@@ -435,6 +511,7 @@ export class Effect {
 
         // Collision Logic (Only for Galaxy and when interacting)
         if (this.config.type === 'galaxy') {
+            this.updateGrid();
             this.handleCollisions();
         }
 
@@ -448,71 +525,66 @@ export class Effect {
     handleCollisions() {
         const interactionRadius = this.config.interactionRadius || 250;
         const sqRadius = interactionRadius * interactionRadius;
+        const fusionRadius = this.config.fusionRadius || 50;
+        const sqFusionRadius = fusionRadius * fusionRadius;
 
-        // Optimization: Only check particles close to mouse
-        // Filter list of candidates first? Or just iterate? 
-        // Iterate is O(N^2) if all are close. 
-        // Let's iterate but skip quick.
+        const cols = Math.ceil(this.width / this.gridSize);
 
-        for (let i = 0; i < this.particles.length; i++) {
-            const p1 = this.particles[i];
-            if (!p1.active) continue;
+        // Only check particles near the mouse
+        const mouseCol = Math.floor(this.mouse.x / this.gridSize);
+        const mouseRow = Math.floor(this.mouse.y / this.gridSize);
+        const gridRange = Math.ceil(interactionRadius / this.gridSize);
 
-            // Is p1 interacting?
-            const dx1 = this.mouse.x - p1.x;
-            const dy1 = this.mouse.y - p1.y;
-            const d1Sq = dx1 * dx1 + dy1 * dy1;
-            if (d1Sq > sqRadius) continue;
+        for (let r = mouseRow - gridRange; r <= mouseRow + gridRange; r++) {
+            for (let c = mouseCol - gridRange; c <= mouseCol + gridRange; c++) {
+                if (r < 0 || c < 0 || r >= Math.ceil(this.height / this.gridSize) || c >= cols) continue;
 
-            // CORE FUSION: Only merge if close to center
-            // This prevents the whole cloud from clumping
-            const fusionRadius = this.config.fusionRadius || 50;
-            if (d1Sq > fusionRadius * fusionRadius) continue;
+                const index = r * cols + c;
+                const cell = this.grid[index];
+                if (!cell) continue;
 
-            for (let j = i + 1; j < this.particles.length; j++) {
-                const p2 = this.particles[j];
-                if (!p2.active) continue;
+                for (let i = 0; i < cell.length; i++) {
+                    const p1 = cell[i];
+                    if (!p1.active) continue;
 
-                // Is p2 interacting?
-                const dx2 = this.mouse.x - p2.x;
-                const dy2 = this.mouse.y - p2.y;
-                if (dx2 * dx2 + dy2 * dy2 > sqRadius) continue;
+                    const dx1 = this.mouse.x - p1.x;
+                    const dy1 = this.mouse.y - p1.y;
+                    const d1Sq = dx1 * dx1 + dy1 * dy1;
+                    if (d1Sq > sqFusionRadius) continue;
 
-                const dx = p1.x - p2.x;
-                const dy = p1.y - p2.y;
-                const dist = Math.sqrt(dx * dx + dy * dy);
+                    for (let j = i + 1; j < cell.length; j++) {
+                        const p2 = cell[j];
+                        if (!p2.active) continue;
 
-                if (dist < p1.size + p2.size) {
-                    // Collision!
-                    // Fix: Correctly pick the larger particle as survivor to prevent "jumping"
-                    const survivor = p1.size >= p2.size ? p1 : p2;
-                    const victim = survivor === p1 ? p2 : p1;
+                        const dx = p1.x - p2.x;
+                        const dy = p1.y - p2.y;
+                        const distSq = dx * dx + dy * dy;
 
-                    // Growth Logic: Area Preservation
-                    const newAreaRadius = Math.sqrt(survivor.size * survivor.size + victim.size * victim.size);
+                        if (distSq < (p1.size + p2.size) * (p1.size + p2.size)) {
+                            const survivor = p1.size >= p2.size ? p1 : p2;
+                            const victim = survivor === p1 ? p2 : p1;
 
-                    // Cap size
-                    const maxSize = this.config.maxParticleSize || 50;
-                    if (survivor.size < maxSize) {
-                        survivor.size = Math.min(newAreaRadius, maxSize);
+                            const newAreaRadius = Math.sqrt(survivor.size * survivor.size + victim.size * victim.size);
+                            const maxSize = this.config.maxParticleSize || 50;
+                            if (survivor.size < maxSize) {
+                                survivor.size = Math.min(newAreaRadius, maxSize);
+                            }
+
+                            const m1 = survivor.size * survivor.size;
+                            const m2 = victim.size * victim.size;
+                            const intensity = (this.config.flashIntensityMultiplier || 1) * (m2 / 10);
+                            survivor.flash = Math.min(survivor.flash + intensity, 2.0);
+
+                            victim.active = false;
+                            survivor.payload.push(victim);
+
+                            const totalMass = m1 + m2;
+                            survivor.vx = (survivor.vx * m1 + victim.vx * m2) / totalMass;
+                            survivor.vy = (survivor.vy * m1 + victim.vy * m2) / totalMass;
+
+                            if (victim === p1) break;
+                        }
                     }
-
-                    const m1 = survivor.size * survivor.size;
-                    const m2 = victim.size * victim.size;
-                    const intensity = (this.config.flashIntensityMultiplier || 1) * (m2 / 10);
-                    survivor.flash = Math.min(survivor.flash + intensity, 2.0); // Cumulative flash
-
-                    victim.active = false; // Dormant
-                    survivor.payload.push(victim);
-
-                    // Momentum Conservation (Mass-weighted)
-                    const totalMass = m1 + m2;
-
-                    survivor.vx = (survivor.vx * m1 + victim.vx * m2) / totalMass;
-                    survivor.vy = (survivor.vy * m1 + victim.vy * m2) / totalMass;
-
-                    // If p1 was the victim, it's dead. Stop checking p1 against others.
-                    if (victim === p1) break;
                 }
             }
         }
