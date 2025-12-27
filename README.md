@@ -77,3 +77,41 @@ Both `developer` and `creative` sides have their own physics settings.
 - **Data**: JSON-driven architecture.
 - **View**: Split-screen responsive CSS logic.
 
+## FPS Testing
+Copy this code and paste it in the console to test the FPS of the website.
+```javascript
+(function() {
+    // Check if counter already exists
+    if (document.getElementById('fps-counter')) return;
+    var stats = document.createElement('div');
+    stats.id = 'fps-counter';
+    stats.style.position = 'fixed';
+    stats.style.top = '10px';
+    stats.style.left = '10px';
+    stats.style.padding = '8px 12px';
+    stats.style.background = 'rgba(0, 0, 0, 0.85)';
+    stats.style.color = '#00ff00';
+    stats.style.fontFamily = 'monospace';
+    stats.style.fontSize = '16px';
+    stats.style.fontWeight = 'bold';
+    stats.style.zIndex = '1000000';
+    stats.style.borderRadius = '4px';
+    stats.style.border = '1px solid #444';
+    stats.style.pointerEvents = 'none'; // So it doesn't block clicks
+    stats.innerText = 'FPS: --';
+    document.body.appendChild(stats);
+    var lastTime = performance.now();
+    var frameCount = 0;
+    function update(time) {
+        frameCount++;
+        if (time - lastTime >= 1000) {
+            var fps = Math.round((frameCount * 1000) / (time - lastTime));
+            stats.innerText = 'FPS: ' + fps;
+            frameCount = 0;
+            lastTime = time;
+        }
+        requestAnimationFrame(update);
+    }
+    requestAnimationFrame(update);
+})();
+```
