@@ -76,7 +76,12 @@ export class FloatingEffect {
         // Let's assume on Mobile, Dragging Down (Delta > 0) feels like "Pulling Creative Down".
         // Let's flip it.
 
-        const isDevTheme = this.isMobile ? delta < 0 : delta > 0;
+        // Determine theme based on direction
+        // Desktop: Right (Delta > 0) = Reveals Developer
+        // Mobile: Down (Delta > 0) = Reveals Developer
+        // User confirmed: Dragging UP (Delta < 0) -> Creative.
+        // Therefore: Dragging DOWN (Delta > 0) -> Developer.
+        const isDevTheme = delta > 0;
 
         for (let i = 0; i < count; i++) {
             let x, y;
