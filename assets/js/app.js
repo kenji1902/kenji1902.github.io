@@ -100,11 +100,31 @@ function updateMobileClip() {
 }
 
 // Attach scroll listener
+let lastScrollY = window.scrollY;
 window.addEventListener('scroll', () => {
     // Only update if not dragging (dragging handles it) or just always update?
     // Dragging updates via moveDrag. Scrolling updates via this.
     // To allow smooth scroll+drag, usually fine.
     if (!isDragging) requestAnimationFrame(updateMobileClip);
+
+    // AUTO-HIDE HANDLE ON SCROLL (Mobile Android Style)
+    if (window.innerWidth <= 768 && !isDragging) {
+        const currentScrollY = window.scrollY;
+
+        // Threshold to prevent jitter (e.g. rubber banding)
+        if (Math.abs(currentScrollY - lastScrollY) > 5) {
+            if (currentScrollY > lastScrollY && currentScrollY > 50) {
+                // Scrolling DOWN -> HIDE
+                handle.style.opacity = '0';
+                handle.style.pointerEvents = 'none';
+            } else {
+                // Scrolling UP -> SHOW
+                handle.style.opacity = '1';
+                handle.style.pointerEvents = 'auto';
+            }
+            lastScrollY = currentScrollY;
+        }
+    }
 });
 
 // Update moveDrag to use this logic for Mobile
@@ -244,6 +264,15 @@ window.addEventListener('resize', () => {
     if (!isDragging) {
         handle.style.cursor = window.innerWidth <= 768 ? 'row-resize' : 'col-resize';
     }
+
+    // SYNC HANDLER: Re-dispatch position to keep Floating Canvas aligned
+    // This fixes the issue where address bar show/hide desyncs the DOM handle from the Canvas logic
+    const rect = handle.getBoundingClientRect();
+    const isMobile = window.innerWidth <= 768;
+    const x = rect.left + rect.width / 2;
+    const y = rect.top + rect.height / 2;
+
+    dispatchSliderEvent(isMobile, isMobile ? y : x);
 });
 
 // Run init after DOM content load or stack clear

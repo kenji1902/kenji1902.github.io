@@ -126,7 +126,7 @@ export class FloatingEffect {
         }
 
         // Draw Slider Line Glow (Optional, to enhance the effect)
-        this.drawGlow();
+        // this.drawGlow();
 
         requestAnimationFrame(() => this.animate());
     }

@@ -385,6 +385,8 @@ body {
     justify-content: center;
     align-items: center;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+    transition: opacity 0.3s ease;
+    /* Smooth auto-hide */
     border: 4px solid #000;
 
     /* Disable Highlight */
