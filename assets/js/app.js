@@ -106,25 +106,6 @@ window.addEventListener('scroll', () => {
     // Dragging updates via moveDrag. Scrolling updates via this.
     // To allow smooth scroll+drag, usually fine.
     if (!isDragging) requestAnimationFrame(updateMobileClip);
-
-    // AUTO-HIDE HANDLE ON SCROLL (Mobile Android Style)
-    if (window.innerWidth <= 768 && !isDragging) {
-        const currentScrollY = window.scrollY;
-
-        // Threshold to prevent jitter (e.g. rubber banding)
-        if (Math.abs(currentScrollY - lastScrollY) > 5) {
-            if (currentScrollY > lastScrollY && currentScrollY > 50) {
-                // Scrolling DOWN -> HIDE
-                handle.style.opacity = '0';
-                handle.style.pointerEvents = 'none';
-            } else {
-                // Scrolling UP -> SHOW
-                handle.style.opacity = '1';
-                handle.style.pointerEvents = 'auto';
-            }
-            lastScrollY = currentScrollY;
-        }
-    }
 });
 
 // Update moveDrag to use this logic for Mobile
