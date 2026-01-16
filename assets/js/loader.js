@@ -1,8 +1,6 @@
-
-// assets/js/loader.js
-
 // assets/js/loader.js
 import { Effect } from './hero.js';
+import { FloatingEffect } from './floating-effect.js';
 
 async function loadData() {
     try {
@@ -12,6 +10,23 @@ async function loadData() {
 
         // Expose configuration globally for app.js
         window.mobileConfig = data.mobileConfig || { headerHideThreshold: 0.2 };
+        window.debugConfig = data.debugConfig || {};
+
+        // Debug Transparency (Configurable)
+        if (data.debugConfig) {
+            if (data.debugConfig.transparentDeveloper) {
+                const devSide = document.getElementById('developer-side');
+                devSide.style.opacity = '0'; // Hide entire side (background + canvas + content)
+
+                // UNMASK Creative Side so we can see particles spawning on the hidden side
+                const creativeSide = document.getElementById('creative-side');
+                creativeSide.style.overflow = 'visible';
+            }
+            if (data.debugConfig.transparentCreative) {
+                const creativeSide = document.getElementById('creative-side');
+                creativeSide.style.opacity = '0'; // Hide entire side (background + canvas + content)
+            }
+        }
 
         renderDeveloper(data.developer);
         renderCreative(data.creative);
@@ -26,6 +41,9 @@ async function loadData() {
             // Configs are now separate in data.json
             initHero(data.heroConfig);
         }
+
+        // Initialize Floating Canvas with Config
+        initFloatingCanvas(data.floatingLayer);
 
         // Remove loading overlay
         setTimeout(() => {
@@ -64,6 +82,13 @@ function initHero(config) {
             creativeEffect.resize(window.innerWidth, window.innerHeight);
         }, 200);
     });
+}
+
+function initFloatingCanvas(config) {
+    const canvas = document.getElementById('canvas-floating');
+    if (canvas) {
+        new FloatingEffect(canvas, config);
+    }
 }
 
 function renderDeveloper(data) {
@@ -240,4 +265,7 @@ function renderCreative(data) {
 }
 
 // Initialize
-document.addEventListener('DOMContentLoaded', loadData);
+document.addEventListener('DOMContentLoaded', () => {
+    loadData();
+    // initFloatingCanvas is called inside loadData now to ensure config is ready
+});

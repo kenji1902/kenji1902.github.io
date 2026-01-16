@@ -13,6 +13,24 @@
             "phone": "+63 917 502 8874"
         }
     },
+    "floatingLayer": {
+        "developer": {
+            "type": "binary",
+            "chars": "01",
+            "colors": [
+                "#00ff9d",
+                "#00bcd4"
+            ]
+        },
+        "creative": {
+            "type": "sparkle",
+            "colors": [
+                "#ff0055",
+                "#ff9900",
+                "#ffffff"
+            ]
+        }
+    },
     "developer": {
         "title": "DEVELOPER",
         "description": "As a graduate of Computer Science with specialization of Software Engineering, I have a strong foundation in the principles and practices of software development.",
@@ -128,7 +146,8 @@
             "ease": 0.1,
             "color": "#00ff9d",
             "charSet": "01",
-            "type": "matrix"
+            "type": "matrix",
+            "cullingOffset": 25
         },
         "creative": {
             "image": "assets/home/images/hero_bw.png",
@@ -159,10 +178,15 @@
             "pullGradient": 0.1009,
             "baseTrackStrength": 0.005,
             "hotColor": "#ffdd40",
-            "maxParticleSize": 20
+            "maxParticleSize": 20,
+            "cullingOffset": 25
         }
     },
     "mobileConfig": {
         "headerHideThreshold": 0.8
+    },
+    "debugConfig": {
+        "transparentDeveloper": false,
+        "transparentCreative": false
     }
 }

@@ -60,6 +60,7 @@ export class MatrixParticle extends Particle {
     }
 
     draw(context) {
+        if (!this.active) return;
         context.fillStyle = this.color;
         context.font = `${this.fontSize}px monospace`;
         context.fillText(this.char, this.x, this.y);
@@ -73,6 +74,7 @@ export class BrushParticle extends Particle {
         this.size = (Math.random() * 5 + 2) * (this.effect.gap / 2);
     }
     draw(context) {
+        if (!this.active) return;
         context.fillStyle = this.color;
         context.beginPath();
         context.arc(this.x, this.y, this.size, 0, Math.PI * 2);
@@ -220,6 +222,7 @@ class GalaxyParticle extends Particle {
                     const p = this.payload.pop();
                     if (p) {
                         p.active = true;
+                        p.isFused = false; // Release from fusion state
                         p.x = this.x;
                         p.y = this.y;
 
@@ -352,6 +355,12 @@ export class Effect {
         // Optimization: Spatial Partitioning Grid
         this.gridSize = 60; // Slightly larger grid for fewer cells
         this.grid = [];
+
+        // Track Slider State for Optimization
+        this.sliderState = null;
+        window.addEventListener('sliderMove', (e) => {
+            this.sliderState = e.detail;
+        });
     }
 
     getPreRenderedGradient(color, radius, type, flashColor = '#ffffff') {
@@ -506,19 +515,80 @@ export class Effect {
     animate() {
         this.context.clearRect(0, 0, this.width, this.height);
 
-        // Remove dead particles from fusion
+        // Optimization: Culling based on Slider Position
+        // Default to visible if no slider event yet (so initial load works)
+        let isVisible = true;
+
+        // Define Visibility Zone based on Side
+        // Offset: particles slightly off-screen are still active to prevent "pop-in" too close
+        // User requested "spawn when about to be seen".
+        const offset = this.config.cullingOffset !== undefined ? this.config.cullingOffset : 200;
+
+        if (this.sliderState) {
+            const { x, y, isMobile } = this.sliderState;
+
+            // For now, let's just use the particle's HOME position for culling check
+            // Because particles drift, but we care about the "mass"
+        }
+
+        this.particles.forEach(p => {
+            // Check Visibility
+            if (this.sliderState) {
+                const { x, y, isMobile } = this.sliderState;
+                let inView = false;
+
+                if (isMobile) {
+                    // Vertical Split
+                    if (this.sideType === 'developer') {
+                        // Top side: Visible if p.y < y + offset
+                        inView = p.originY < y + offset;
+                    } else {
+                        // Bottom side: Visible if p.y > y - offset
+                        inView = p.originY > y - offset;
+                    }
+                } else {
+                    // Horizontal Split
+                    if (this.sideType === 'developer') {
+                        // Left side: Visible if p.x < x + offset
+                        inView = p.originX < x + offset;
+                    } else {
+                        // Right side: Visible if p.x > x - offset
+                        inView = p.originX > x - offset;
+                    }
+                }
+
+
+                if (inView) {
+                    // Just became visible?
+                    if (!p.active && !p.isFused) { // Avoid respawning fused particles
+                        p.active = true;
+                        // RESET STATE (Spawn logic)
+                        p.size = p.baseSize || p.size; // Reset size
+                        p.flash = 0; // Reset flash
+                        p.payload = []; // Clear payload
+                        // Optional: Reset position to origin if strict spawn desired
+                        // p.x = p.originX; 
+                        // p.y = p.originY;
+                    }
+                } else {
+                    p.active = false;
+                }
+            }
+
+            p.update();
+            p.draw(this.context);
+        });
+
+        // Remove dead particles from fusion (if any logic used it)
         // this.particles = this.particles.filter(p => !p.dead);
 
         // Collision Logic (Only for Galaxy and when interacting)
         if (this.config.type === 'galaxy') {
+            // Only update grid for ACTIVE particles to save PERF
             this.updateGrid();
             this.handleCollisions();
         }
 
-        this.particles.forEach(p => {
-            p.update();
-            p.draw(this.context);
-        });
         requestAnimationFrame(() => this.animate());
     }
 
@@ -576,6 +646,7 @@ export class Effect {
                             survivor.flash = Math.min(survivor.flash + intensity, 2.0);
 
                             victim.active = false;
+                            victim.isFused = true; // Mark as fused so culling doesn't respawn it
                             survivor.payload.push(victim);
 
                             const totalMass = m1 + m2;

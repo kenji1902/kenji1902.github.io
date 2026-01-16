@@ -24,6 +24,18 @@
     --transition-speed: 0.3s;
 }
 
+#canvas-floating {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    z-index: 999;
+    /* On top of everything */
+}
+
+
 * {
     box-sizing: border-box;
     margin: 0;
@@ -366,7 +378,8 @@ body {
     height: 60px;
     background: #fff;
     border-radius: 50%;
-    z-index: 100;
+    z-index: 2000;
+    /* Ensure it is above the floating canvas (z-index 999) */
     cursor: col-resize;
     display: flex;
     justify-content: center;

@@ -54,7 +54,23 @@ function initSlider() {
     mockEvent.clientY = mockEvent.pageY;
 
     moveDrag(mockEvent);
+
+    // Dispatch Initial State
+    dispatchSliderEvent(isMobile, isMobile ? mockEvent.pageY : mockEvent.pageX);
+
     isDragging = wasDragging;
+}
+
+function dispatchSliderEvent(isMobile, position) {
+    const event = new CustomEvent('sliderMove', {
+        detail: {
+            x: isMobile ? 0 : position,
+            y: isMobile ? position : 0,
+            isMobile: isMobile,
+            ratio: isMobile ? (position / window.innerHeight) : (position / window.innerWidth)
+        }
+    });
+    window.dispatchEvent(event);
 }
 
 // Run init after DOM content load or stack clear
@@ -72,6 +88,12 @@ function updateMobileClip() {
     // OPTIMIZED: Use cached handle position to avoid Layout Thrashing (getBoundingClientRect)
     // This removes the "delay" caused by heavy DOM reads during scroll.
     const scrollY = window.scrollY;
+
+    // DEBUG Overrides
+    if (window.debugConfig && window.debugConfig.transparentDeveloper) {
+        creativeSide.style.clipPath = 'none'; // Ensure no clipping
+        return;
+    }
 
     const cutPos = scrollY + currentHandleY;
     creativeSide.style.clipPath = `inset(${cutPos}px 0 0 0)`;
@@ -115,12 +137,18 @@ function moveDrag(e) {
         creativeSide.style.width = '100vw';
         creativeSide.style.top = '0'; // Aligned with Dev
         creativeSide.style.bottom = 'auto';
+        creativeSide.style.borderTop = 'none'; // Remove static CSS border to prevent "ghost line"
 
         // Clip Path Logic
         // We calculate the cut relative to document top
         const scrollY = window.scrollY;
-        const cutPos = scrollY + y;
-        creativeSide.style.clipPath = `inset(${cutPos}px 0 0 0)`;
+
+        if (window.debugConfig && window.debugConfig.transparentDeveloper) {
+            creativeSide.style.clipPath = 'none';
+        } else {
+            const cutPos = scrollY + y;
+            creativeSide.style.clipPath = `inset(${cutPos}px 0 0 0)`;
+        }
 
         // Handle Position (Fixed Viewport)
         handle.style.top = `${y}px`;
@@ -196,6 +224,9 @@ function moveDrag(e) {
             creativeHeader.style.opacity = creativeRatio > threshold ? 0 : 1;
         }
     }
+
+    // Dispatch Event for Floating Effect (Global)
+    dispatchSliderEvent(isMobile, isMobile ? (getY(e)) : (getX(e)));
 }
 
 // Event Listeners
@@ -216,6 +247,7 @@ window.addEventListener('resize', () => {
 });
 
 // Run init after DOM content load or stack clear
+// Use setTimeout to ensure layout is painted
 setTimeout(initSlider, 100);
 
 // UNIFIED SCROLL LOGIC
@@ -268,4 +300,3 @@ if (devWrapper) observer.observe(devWrapper);
 if (creativeWrapper) observer.observe(creativeWrapper);
 // If they are dynamic, maybe observe the sides?
 // We will call updates from loader.js too.
-
