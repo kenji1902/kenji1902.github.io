@@ -45,6 +45,11 @@ async function loadData() {
         // Initialize Floating Canvas with Config
         initFloatingCanvas(data.floatingLayer);
 
+        // Trigger initial slider state now that effects are ready to receive events
+        setTimeout(() => {
+            if (window.initSlider) window.initSlider();
+        }, 50);
+
         // Remove loading overlay
         setTimeout(() => {
             document.getElementById('loading-overlay').classList.add('fade-out');

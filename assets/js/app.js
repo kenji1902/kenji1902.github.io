@@ -75,7 +75,7 @@ function dispatchSliderEvent(isMobile, position) {
 
 // Run init after DOM content load or stack clear
 // Use setTimeout to ensure layout is painted
-setTimeout(initSlider, 100);
+// setTimeout(initSlider, 100); // Removed to prevent race conditions
 
 
 // State for Handle Position (Viewport Y)
@@ -258,7 +258,8 @@ window.addEventListener('resize', () => {
 
 // Run init after DOM content load or stack clear
 // Use setTimeout to ensure layout is painted
-setTimeout(initSlider, 100);
+// setTimeout(initSlider, 100); // Removed to prevent race conditions
+window.initSlider = initSlider;
 
 // UNIFIED SCROLL LOGIC
 // We need to set the height of the split-container to match the taller content
