@@ -56,6 +56,17 @@ Software Engineer with expertise in backend, frontend, and cloud development, sp
 
 ## Professional Experience
 
+### **Accenture**  
+**Role:** Software Engineer Sr. Analyst
+
+**Technology Stack:**  
+Java, React JS JavaScript, HTML, CSS, Process Factoria
+
+**Responsibilities:**
+- Developed Bank forms using Process Factorial and React JS
+- Guiding and Teaching Associates
+---
+
 ### **Monstronauts Inc.**  
 **Role:** Full-Stack Developer  
 
