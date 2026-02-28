@@ -114,7 +114,7 @@ Deep Learning, Machine Learning, Python, Java, React, PHP, JavaScript, jQuery, H
 
 <!-- Oracle badge (uses proxy to crop to 128x128) -->
 <a href="https://catalog-education.oracle.com/ords/certview/sharebadge?id=34B844188C891FDF69F78C6916ADECB5F2F3F3DF8DE1BC42DC2F5071B70B130C">
-  <img src="https://github.com/kenji1902/kenji1902.github.io/blob/main/assets/home/images/Java-SE-21-Professional%20Badge.png?raw=true" width="128" height="128">
+  <img src="https://github.com/kenji1902/kenji1902.github.io/blob/main/assets/home/images/badge/Java-SE-21-Professional%20Badge.png?raw=true" width="128" height="128">
 </a>
 
 <!-- Python badge (original) -->
@@ -139,12 +139,12 @@ Deep Learning, Machine Learning, Python, Java, React, PHP, JavaScript, jQuery, H
 
 <!-- SAP badge 1 (original) -->
 <a href="https://badger.learning.sap.com/verify/xamak-tuhec-bagob-hiryd-tinun">
-  <img src="https://badger.learning.sap.com/verify/xamak-tuhec-bagob-hiryd-tinun/badge.png" width="128" height="128">
+  <img src="https://github.com/kenji1902/kenji1902.github.io/blob/main/assets/home/images/badge/Accelerating%20SAP%20Project%20Delivery.png?raw=true" width="128" height="128">
 </a>
 
 <!-- SAP badge 2 (original) -->
 <a href="https://badger.learning.sap.com/verify/xenos-myvyf-poror-cisup-sevit">
-  <img src="https://badger.learning.sap.com/verify/xenos-myvyf-poror-cisup-sevit/badge.png" width="128" height="128">
+  <img src="https://github.com/kenji1902/kenji1902.github.io/blob/main/assets/home/images/badge/Boosting%20AI-Driven_Sap.png?raw=true" width="128" height="128">
 </a>
 
 <!-- Credly blob badge (original) -->
