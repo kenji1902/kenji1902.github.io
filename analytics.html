@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analytics Dashboard | Kenji Shimizu</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;600;800&family=Space+Mono&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/main.css">
+    <style>
+        body { background: #050505; color: #fff; overflow-y: auto; padding: 2rem; }
+        .dash-container { max-width: 1100px; margin: 0 auto; }
+        .dash-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 3rem; }
+        .dash-title h1 { font-family: var(--creative-font); font-size: 2.5rem; background: linear-gradient(to right, #fff, #888); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .dash-title p { font-family: var(--dev-font); color: var(--dev-accent); font-size: 0.8rem; margin-top: 0.5rem; }
+        .report-card { 
+            background: rgba(255, 255, 255, 0.03); 
+            border: 1px solid rgba(255, 255, 255, 0.08); 
+            border-radius: 20px; 
+            padding: 1.5rem; 
+            min-height: 600px;
+            position: relative;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+        }
+        .report-card iframe { width: 100%; height: 600px; border: none; border-radius: 10px; }
+        .placeholder-msg {
+            position: absolute; inset: 0; display: flex; flex-direction: column; 
+            justify-content: center; align-items: center; text-align: center; padding: 3rem;
+        }
+        .placeholder-msg .material-icons { font-size: 4rem; color: var(--creative-accent); margin-bottom: 1rem; opacity: 0.5; }
+        .back-btn {
+            display: inline-flex; align-items: center; gap: 8px; color: #aaa; 
+            text-decoration: none; font-size: 0.9rem; transition: color 0.3s;
+        }
+        .back-btn:hover { color: #fff; }
+    </style>
+</head>
+<body>
+    <div class="dash-container">
+        <header class="dash-header">
+            <div class="dash-title">
+                <a href="index.html" class="back-btn"><span class="material-icons">arrow_back</span> Return</a>
+                <h1>Site Analytics</h1>
+                <p>>_ Monitoring exhibit traffic and home engagement</p>
+            </div>
+            <div class="material-icons" style="font-size: 3rem; opacity: 0.1;">insights</div>
+        </header>
+
+        <div class="report-card">
+            <!-- 
+                ENGINEER NOTE: 
+                1. Go to Looker Studio (lookerstudio.google.com).
+                2. Create a new report and connect your Google Analytics 4 property.
+                3. Click "File" -> "Embed report".
+                4. Enable embedding and copy the "Embed URL" part of the iframe src.
+                5. Replace the URL below with your report URL.
+            -->
+            <div id="report-content" class="placeholder-msg">
+                <span class="material-icons">bar_chart</span>
+                <h2>Report Setup Required</h2>
+                <p style="max-width: 500px; color: #888; font-size: 0.9rem; margin-top: 1rem;">
+                    To show live Google Analytics data here, you must create a public report in 
+                    <strong>Looker Studio</strong> and paste the embed URL into <code>analytics.html</code>.
+                </p>
+            </div>
+            
+            <!-- UNCOMMENT THIS WHEN YOU HAVE YOUR URL -->
+            <!-- <iframe src="PASTE_YOUR_LOOKER_STUDIO_EMBED_URL_HERE"></iframe> -->
+        </div>
+
+        <footer style="margin-top: 3rem; text-align: center; font-family: var(--dev-font); font-size: 0.7rem; color: #444;">
+            &copy; <script>document.write(new Date().getFullYear())</script> KENJI SHIMIZU // POWERED BY GOOGLE ANALYTICS 4
+        </footer>
+    </div>
+
+    <script>
+        // Script to hide placeholder if iframe is added later
+        const frame = document.querySelector('iframe');
+        const placeholder = document.getElementById('report-content');
+        if (frame) {
+            placeholder.style.display = 'none';
+        }
+    </script>
+</body>
+</html>
