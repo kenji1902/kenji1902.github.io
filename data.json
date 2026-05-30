@@ -125,13 +125,13 @@
             "assets/home/images/IG-keeptryingORwhybother.jpg",
             "assets/home/images/deminWoman.jpg",
             "assets/home/images/baroque1.jpg",
+            "assets/home/images/IG-NightWalk.jpg",
             "assets/home/images/bookhat.jpg",
             "assets/home/images/reading.jpg",
             "assets/home/images/RedHatGirl.jpg",
-            "assets/home/images/suitGirl.jpg",
             "assets/home/images/girlFlower.jpg",
             "assets/home/images/samurai.jpg",
-            "assets/home/images/IG-NightWalk.jpg",
+            "assets/home/images/suitGirl.jpg",
             "assets/home/images/Japanese girl.jpg",
             "assets/home/images/19th century 2.png"
         ]
@@ -188,5 +188,321 @@
     "debugConfig": {
         "transparentDeveloper": false,
         "transparentCreative": false
+    },
+    "galleryLayout": {
+        "width": 9,
+        "height": 9,
+        "cells": [
+            {
+                "type": "wall"
+            },
+            {
+                "type": "wall"
+            },
+            {
+                "type": "wall"
+            },
+            {
+                "type": "wall"
+            },
+            {
+                "type": "wall"
+            },
+            {
+                "type": "wall"
+            },
+            {
+                "type": "wall"
+            },
+            {
+                "type": "wall"
+            },
+            {
+                "type": "wall"
+            },
+            {
+                "type": "wall"
+            },
+            {
+                "type": "art",
+                "artIds": {
+                    "E": "creative_6"
+                }
+            },
+            {
+                "type": "floor"
+            },
+            {
+                "type": "floor"
+            },
+            {
+                "type": "floor"
+            },
+            {
+                "type": "floor"
+            },
+            {
+                "type": "floor"
+            },
+            {
+                "type": "art",
+                "artIds": {
+                    "W": "creative_1"
+                }
+            },
+            {
+                "type": "wall"
+            },
+            {
+                "type": "wall"
+            },
+            {
+                "type": "art",
+                "artIds": {
+                    "E": "creative_5"
+                }
+            },
+            {
+                "type": "floor"
+            },
+            {
+                "type": "art",
+                "artIds": {
+                    "W": "creative_1",
+                    "E": "creative_2",
+                    "N": "creative_3",
+                    "S": "creative_4"
+                }
+            },
+            {
+                "type": "floor"
+            },
+            {
+                "type": "art",
+                "artIds": {
+                    "W": "creative_5",
+                    "E": "creative_6",
+                    "N": "creative_7",
+                    "S": "creative_8"
+                }
+            },
+            {
+                "type": "floor"
+            },
+            {
+                "type": "art",
+                "artIds": {
+                    "W": "creative_0"
+                }
+            },
+            {
+                "type": "wall"
+            },
+            {
+                "type": "wall"
+            },
+            {
+                "type": "art",
+                "artIds": {
+                    "E": "creative_4"
+                }
+            },
+            {
+                "type": "floor"
+            },
+            {
+                "type": "floor"
+            },
+            {
+                "type": "floor"
+            },
+            {
+                "type": "floor"
+            },
+            {
+                "type": "floor"
+            },
+            {
+                "type": "art",
+                "artIds": {
+                    "W": "creative_13"
+                }
+            },
+            {
+                "type": "wall"
+            },
+            {
+                "type": "wall"
+            },
+            {
+                "type": "art",
+                "artIds": {
+                    "E": "creative_3"
+                }
+            },
+            {
+                "type": "floor"
+            },
+            {
+                "type": "floor"
+            },
+            {
+                "type": "floor"
+            },
+            {
+                "type": "floor"
+            },
+            {
+                "type": "floor"
+            },
+            {
+                "type": "art",
+                "artIds": {
+                    "W": "creative_12"
+                }
+            },
+            {
+                "type": "wall"
+            },
+            {
+                "type": "wall"
+            },
+            {
+                "type": "art",
+                "artIds": {
+                    "E": "creative_2"
+                }
+            },
+            {
+                "type": "floor"
+            },
+            {
+                "type": "floor"
+            },
+            {
+                "type": "floor"
+            },
+            {
+                "type": "floor"
+            },
+            {
+                "type": "floor"
+            },
+            {
+                "type": "art",
+                "artIds": {
+                    "W": "creative_11"
+                }
+            },
+            {
+                "type": "wall"
+            },
+            {
+                "type": "wall"
+            },
+            {
+                "type": "art",
+                "artIds": {
+                    "E": "creative_1"
+                }
+            },
+            {
+                "type": "floor"
+            },
+            {
+                "type": "art",
+                "artIds": {
+                    "W": "creative_11",
+                    "E": "creative_12",
+                    "N": "creative_13",
+                    "S": "creative_0"
+                }
+            },
+            {
+                "type": "floor"
+            },
+            {
+                "type": "art",
+                "artIds": {
+                    "W": "creative_7",
+                    "E": "creative_8",
+                    "N": "creative_9",
+                    "S": "creative_10"
+                }
+            },
+            {
+                "type": "floor"
+            },
+            {
+                "type": "art",
+                "artIds": {
+                    "W": "creative_10"
+                }
+            },
+            {
+                "type": "wall"
+            },
+            {
+                "type": "wall"
+            },
+            {
+                "type": "art",
+                "artIds": {
+                    "E": "creative_0"
+                }
+            },
+            {
+                "type": "floor"
+            },
+            {
+                "type": "floor"
+            },
+            {
+                "type": "floor"
+            },
+            {
+                "type": "floor"
+            },
+            {
+                "type": "spawn",
+                "spawnDir": "N"
+            },
+            {
+                "type": "art",
+                "artIds": {
+                    "W": "creative_9"
+                }
+            },
+            {
+                "type": "wall"
+            },
+            {
+                "type": "wall"
+            },
+            {
+                "type": "wall"
+            },
+            {
+                "type": "wall"
+            },
+            {
+                "type": "wall"
+            },
+            {
+                "type": "wall"
+            },
+            {
+                "type": "wall"
+            },
+            {
+                "type": "wall"
+            },
+            {
+                "type": "wall"
+            },
+            {
+                "type": "wall"
+            }
+        ]
     }
 }

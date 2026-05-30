@@ -11,6 +11,7 @@ async function loadData() {
         // Expose configuration globally for app.js
         window.mobileConfig = data.mobileConfig || { headerHideThreshold: 0.2 };
         window.debugConfig = data.debugConfig || {};
+        window.galleryLayout = data.galleryLayout || null;
 
         // Debug Transparency (Configurable)
         if (data.debugConfig) {
@@ -209,6 +210,31 @@ function renderCreative(data) {
         </div>
     `;
     container.appendChild(bioCard);
+
+    // 3D EXHIBITION CALL TO ACTION
+    const ctaCard = document.createElement('div');
+    ctaCard.style.marginBottom = '3.5rem';
+    ctaCard.innerHTML = `
+        <a href="gallery-3d.html" style="
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            background: linear-gradient(135deg, var(--creative-accent) 0%, var(--creative-secondary) 100%);
+            padding: 14px 32px;
+            border-radius: 50px;
+            color: #fff;
+            text-decoration: none;
+            font-weight: 800;
+            font-size: 0.95rem;
+            letter-spacing: 1px;
+            box-shadow: 0 8px 25px rgba(255, 0, 85, 0.3);
+            transition: all 0.3s ease;
+        ">
+            <span class="material-icons">view_in_ar</span>
+            <span>EXPLORE 3D EXHIBITION</span>
+        </a>
+    `;
+    container.appendChild(ctaCard);
 
     // ART HIGHLIGHT (First Image)
     if (data.gallery && data.gallery.length > 0) {

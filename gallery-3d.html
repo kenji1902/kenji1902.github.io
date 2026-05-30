@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D Creative Gallery & Map Builder | Kenji Shimizu</title>
+    <link rel="icon" type="image/x-icon" href="https://avatars.githubusercontent.com/u/30095254?v=4">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Comforter+Brush&display=swap" rel="stylesheet">
+
+    <!-- Material Icons for sleek controls -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="assets/css/gallery.css">
+</head>
+
+<body>
+    <!-- Loading Overlay -->
+    <div id="loading-overlay">
+        <div class="loader-container">
+            <div class="loader">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+            <p class="loader-text">Loading Gallery Experience...</p>
+        </div>
+    </div>
+
+    <!-- Main Workspace Container -->
+    <main class="app-container">
+
+        <!-- ======================================================== -->
+        <!-- 1. MAP EDITOR INTERFACE (2D Mode)                       -->
+        <!-- ======================================================== -->
+        <section id="editor-screen" class="screen">
+            <div class="editor-header">
+                <div class="header-logo">
+                    <span class="logo-brush">Creative</span>
+                    <span class="logo-code">&lt;3D_Gallery /&gt;</span>
+                </div>
+                <div class="header-actions">
+                    <a href="index.html" class="nav-back-btn">
+                        <span class="material-icons">arrow_back</span> Return to Portfolio
+                    </a>
+                </div>
+            </div>
+
+            <div class="editor-workspace">
+                <!-- Left Control Panel -->
+                <div class="panel left-panel">
+                    <div class="panel-section">
+                        <h3><span class="material-icons">build</span> Editor Tools</h3>
+                        <div class="tool-grid">
+                            <button id="tool-floor" class="tool-btn active" title="Place walkable floor tiles">
+                                <span class="material-icons">grid_on</span>
+                                <span>Floor</span>
+                            </button>
+                            <button id="tool-wall" class="tool-btn" title="Place solid wooden wall blocks">
+                                <span class="material-icons">wallpaper</span>
+                                <span>Plain Wall</span>
+                            </button>
+                            <button id="tool-art" class="tool-btn" title="Place a wall containing custom artwork">
+                                <span class="material-icons">palette</span>
+                                <span>Art Wall</span>
+                            </button>
+                            <button id="tool-spawn" class="tool-btn" title="Set player starting location">
+                                <span class="material-icons">navigation</span>
+                                <span>Spawn Pt</span>
+                            </button>
+                            <button id="tool-select" class="tool-btn" title="Select multiple cells for batch move">
+                                <span class="material-icons">select_all</span>
+                                <span>Select</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="panel-section">
+                        <h3><span class="material-icons">settings</span> Grid Size</h3>
+                        <div class="grid-size-controls" style="display: flex; gap: 10px; margin-bottom: 10px;">
+                            <div style="flex: 1;">
+                                <label style="font-size: 0.7rem; color: #888; display: block; margin-bottom: 4px;">WIDTH</label>
+                                <input type="number" id="input-grid-width" value="8" min="4" max="25" style="width: 100%; background: rgba(0,0,0,0.3); border: 1px solid var(--border-glass); color: #fff; padding: 5px; border-radius: 4px;">
+                            </div>
+                            <div style="flex: 1;">
+                                <label style="font-size: 0.7rem; color: #888; display: block; margin-bottom: 4px;">HEIGHT</label>
+                                <input type="number" id="input-grid-height" value="8" min="4" max="25" style="width: 100%; background: rgba(0,0,0,0.3); border: 1px solid var(--border-glass); color: #fff; padding: 5px; border-radius: 4px;">
+                            </div>
+                        </div>
+                        <button id="btn-resize-grid" class="action-btn" style="width: 100%; font-size: 0.8rem;">
+                            <span class="material-icons">aspect_ratio</span> Resize Grid
+                        </button>
+                        <button id="btn-rotate-layout" class="action-btn" style="width: 100%; font-size: 0.8rem; margin-top: 10px;">
+                            <span class="material-icons">rotate_90_degrees_cw</span> Rotate Layout 90°
+                        </button>
+                    </div>
+                    <div class="panel-actions-wrapper">
+                        <div style="display: flex; gap: 8px;">
+                            <button id="btn-undo" class="action-btn" style="flex: 1;" title="Undo (Ctrl+Z)">
+                                <span class="material-icons">undo</span> Undo
+                            </button>
+                            <button id="btn-redo" class="action-btn" style="flex: 1;" title="Redo (Ctrl+Y)">
+                                <span class="material-icons">redo</span> Redo
+                            </button>
+                        </div>
+                        <button id="btn-move-selection" class="action-btn" title="Move selected cells to a new location">
+                            <span class="material-icons">open_with</span> Move Selection
+                        </button>
+                        <button id="btn-clear-selection" class="action-btn" title="Clear current selection">
+                            <span class="material-icons">deselect</span> Deselect All
+                        </button>
+                        <button id="btn-export" class="action-btn" title="Download layout as JSON">
+                            <span class="material-icons">download</span> Export Layout
+                        </button>
+                        <button id="btn-reset-file" class="action-btn" title="Sync layout with data.json">
+                            <span class="material-icons">sync</span> Sync data.json
+                        </button>
+                        <button id="btn-clear" class="action-btn danger">
+                            <span class="material-icons">delete</span> Clear Grid
+                        </button>
+                    </div>
+                    <div class="panel-section">
+                        <h3><span class="material-icons">auto_awesome</span> Map Presets</h3>
+                        <div class="preset-column">
+                            <button id="preset-hall" class="preset-btn">
+                                <span class="material-icons">museum</span>
+                                <div class="preset-desc">
+                                    <strong>The Grand Hall</strong>
+                                    <span>Spacious open hall with central pillars.</span>
+                                </div>
+                            </button>
+                            <button id="preset-spiral" class="preset-btn">
+                                <span class="material-icons">sync</span>
+                                <div class="preset-desc">
+                                    <strong>The Spiral Path</strong>
+                                    <span>Winding walkway leading to a central masterwork.</span>
+                                </div>
+                            </button>
+                            <button id="preset-corridors" class="preset-btn">
+                                <span class="material-icons">alt_route</span>
+                                <div class="preset-desc">
+                                    <strong>Winding Corridors</strong>
+                                    <span>A maze-like path perfect for long exhibitions.</span>
+                                </div>
+                            </button>
+                        </div>
+                    </div>
+
+                    
+                </div>
+
+                <!-- Center Grid View -->
+                <div class="grid-container">
+                    <div class="grid-wrapper">
+                        <div class="grid-helper-text">
+                            <span class="material-icons">info</span>
+                            <span>Click or drag to build. <strong>Wheel</strong> to Zoom, <strong>Space + Drag</strong> to Pan.</span>
+                        </div>
+                        <div class="grid-view-container" id="grid-view-container">
+                            <div id="editor-grid" class="pixel-grid"></div>
+                        </div>
+                        <div class="grid-view-controls">
+                            <button id="btn-zoom-in" title="Zoom In"><span class="material-icons">add</span></button>
+                            <button id="btn-zoom-out" title="Zoom Out"><span class="material-icons">remove</span></button>
+                            <button id="btn-zoom-reset" title="Reset View"><span class="material-icons">restart_alt</span></button>
+                        </div>
+                        <div class="grid-legend">
+                            <div class="legend-item"><span class="legend-dot floor"></span> Floor</div>
+                            <div class="legend-item"><span class="legend-dot wall"></span> Wall</div>
+                            <div class="legend-item"><span class="legend-dot art"></span> Art Wall</div>
+                            <div class="legend-item"><span class="legend-dot spawn"></span> Spawn Point</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Art Selection Panel -->
+                <div class="panel right-panel" id="art-config-panel">
+                    <div class="art-config-placeholder" id="art-config-placeholder">
+                        <span class="material-icons">photo_library</span>
+                        <p>Click on any <strong>Art Wall</strong> cell in the grid to assign and preview creative content.</p>
+                    </div>
+
+                    <div class="art-config-active hidden" id="art-config-active">
+                        <div class="panel-section">
+                            <h3><span class="material-icons">photo</span> Selected Cell</h3>
+                            <p class="cell-coords-text">Position: Cell <span id="selected-cell-coords">(0, 0)</span></p>
+                        </div>
+
+                        <div class="panel-section">
+                            <h3><span class="material-icons">brush</span> Choose Artwork</h3>
+                            <div class="art-tabs">
+                                <button class="tab-btn active" id="tab-creative">Creative</button>
+                                <button class="tab-btn" id="tab-developer">Projects</button>
+                            </div>
+
+                            <div class="art-list-scroll scrollbar-styled" id="artwork-picker-list">
+                                <!-- Art list items injected dynamically -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer Launch Bar -->
+            <div class="editor-footer">
+                <div class="stats-bar">
+                    <span>Grid Size: <strong id="stat-grid-size">8 x 8</strong></span>
+                    <span>Placed Artworks: <strong id="stat-art-count">0</strong></span>
+                    <span>Spawn Set: <strong id="stat-spawn-set">No</strong></span>
+                </div>
+                <button id="btn-launch" class="launch-btn disabled" disabled>
+                    <span>ENTER 3D GALLERY</span>
+                    <span class="material-icons">view_in_ar</span>
+                </button>
+            </div>
+        </section>
+
+        <!-- ======================================================== -->
+        <!-- 2. THREE.JS 3D GALLERY INTERFACE                       -->
+        <!-- ======================================================== -->
+        <section id="gallery-screen" class="screen active">
+            <!-- 3D Canvas -->
+            <canvas id="canvas-3d"></canvas>
+
+            <!-- 3D UI Overlay HUD (Glassmorphic panels) -->
+            <div class="gallery-hud">
+                <!-- Top Control Bar -->
+                <div class="hud-top-bar">
+                    <button id="btn-edit" class="hud-btn hidden" title="Go back to Map Editor">
+                        <span class="material-icons">edit</span>
+                        <span>Design Mode</span>
+                    </button>
+
+                    <!-- <div class="hud-center-title">
+                        <span class="brush-fancy">Virtual Exhibition</span>
+                    </div> -->
+
+                    <div class="hud-right-actions">
+                        <a href="index.html" class="hud-btn" title="Return to Portfolio">
+                            <span class="material-icons">arrow_back</span>
+                            <span>Return</span>
+                        </a>
+                        <button id="btn-music" class="hud-btn circle" title="Toggle Ambient Synth Music">
+                            <span class="material-icons">volume_off</span>
+                        </button>
+                        <button id="btn-tour" class="hud-btn" title="Toggle Auto Guided Tour">
+                            <span class="material-icons">smart_display</span>
+                            <span>Guided Tour</span>
+                        </button>
+                        <button id="btn-help" class="hud-btn circle" title="Show Keyboard & Touch Controls">
+                            <span class="material-icons">help_outline</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Help Overlay -->
+                <div id="controls-help-modal" class="hud-card controls-modal hidden">
+                    <div class="modal-header">
+                        <h4><span class="material-icons">sports_esports</span> Virtual Gallery Controls</h4>
+                        <button id="btn-close-help" class="icon-close-btn">
+                            <span class="material-icons">close</span>
+                        </button>
+                    </div>
+                    <div class="controls-list">
+                        <div class="control-item">
+                            <span class="key-cap">W</span>
+                            <span class="key-cap">A</span>
+                            <span class="key-cap">S</span>
+                            <span class="key-cap">D</span>
+                            <span class="control-desc">or Arrow Keys to walk around</span>
+                        </div>
+                        <div class="control-item">
+                            <span class="key-cap click-icon"><span class="material-icons">touch_app</span></span>
+                            <span class="control-desc">Click the screen to lock mouse and look around</span>
+                        </div>
+                        <div class="control-item">
+                            <span class="key-cap">ESC</span>
+                            <span class="control-desc">Press Escape to unlock mouse and use buttons</span>
+                        </div>
+                        <div class="control-item">
+                            <span class="key-cap">CTRL</span>
+                            <span class="control-desc">Hold to crouch</span>
+                        </div>
+                        <div class="control-item">
+                            <span class="tour-highlight">Guided Tour</span>
+                            <span class="control-desc">Sit back and enjoy the automated cinematic exhibition</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Guided Tour Overlay Info -->
+                <div id="tour-banner" class="tour-hud-banner hidden">
+                    <span class="spinner-tour"></span>
+                    <span>Cinematic Guided Tour Active...</span>
+                    <button id="btn-stop-tour" class="stop-tour-btn">Stop</button>
+                </div>
+
+                <!-- Dynamic Art Info Overlay (Slides in from the right when near a painting) -->
+                <div id="artwork-info-card" class="hud-card artwork-details-card hidden">
+                    <div class="art-card-border-line"></div>
+                    <div class="artwork-details-content">
+                        <div class="art-badge" id="artwork-type-badge">Creative Work</div>
+                        <h2 id="artwork-detail-title">Between Stations</h2>
+                        <h4 id="artwork-detail-subtitle">Photoshop</h4>
+                        <hr class="art-divider">
+                        <div class="scrollbar-styled artwork-desc-scroll">
+                            <p id="artwork-detail-desc">Between stations, a moment of stillness in a city that never stops moving.</p>
+                        </div>
+                        <div class="artwork-detail-actions" id="artwork-external-link-container">
+                            <a href="#" target="_blank" id="artwork-external-link" class="art-external-btn">
+                                <span>View Original Content</span>
+                                <span class="material-icons">open_in_new</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mobile Virtual Joystick (Shown on touch screens) -->
+                <div id="mobile-joystick-container" class="joystick-container hidden">
+                    <button id="btn-calibrate" class="hud-btn circle hidden calibrate-mobile" title="Calibrate/Reset Gyroscope">
+                        <span class="material-icons">screen_rotation</span>
+                    </button>
+                    <div id="joystick-base" class="joystick-base">
+                        <div id="joystick-knob" class="joystick-knob"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- External Script Dependencies -->
+    <!-- Three.js for outstanding WebGL 3D -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/utils/BufferGeometryUtils.js"></script>
+
+    <!-- Custom App Modules -->
+    <script src="assets/js/gallery-editor.js" type="module"></script>
+</body>
+
+</html>
