@@ -18,8 +18,10 @@ let player = {
     vel: { x: 0, z: 0 },
     yaw: 0,      // Left/Right rotation (radians)
     pitch: 0,    // Up/Down rotation (radians)
+    roll: 0,     // Tilt left/right (radians)
     targetYaw: 0,
     targetPitch: 0,
+    targetRoll: 0,
     height: 3.8,
     crouchHeight: 1.0,
     radius: 1.2  // Collision radius
@@ -30,9 +32,10 @@ let keys = { w: false, a: false, s: false, d: false, ctrl: false };
 let mouse = { x: 0, y: 0 };
 let touchStart = { x: 0, y: 0 };
 let gyro = {
-    alpha: 0, beta: 0, gamma: 0,
-    prevAlpha: null, prevBeta: null, prevGamma: null,
-    enabled: false
+    enabled: false,
+    current: new THREE.Quaternion(),
+    target: new THREE.Quaternion(),
+    offset: new THREE.Quaternion()
 };
 let activeTouches = 0;
 
@@ -772,13 +775,12 @@ function enableGyroUI() {
 }
 
 function calibrateGyro() {
-    // Zero out the tracking offsets so the next movement starts from "now"
-    gyro.prevAlpha = null;
-    gyro.prevBeta = null;
-    gyro.prevGamma = null;
-    
+    // Capture the current physical orientation and invert it to create a "zero" offset
+    gyro.offset.copy(gyro.target).invert();
+
     // Level the virtual horizon
     player.targetPitch = 0;
+    player.targetRoll = 0;
     
     // Provide visual feedback on the button
     btnCalibrate.style.color = 'var(--dev-accent)';
@@ -788,63 +790,23 @@ function calibrateGyro() {
 function handleDeviceOrientation(e) {
     if (isTourActive || renderer.xr.isPresenting) return;
 
-    // alpha: rotation around z-axis [0, 360] (Yaw)
-    // beta: rotation around x-axis [-180, 180] (Pitch)
-    // gamma: rotation around y-axis [-90, 90] (Roll)
+    // Convert degrees to radians
+    const alpha = THREE.MathUtils.degToRad(e.alpha); // Z-axis (Yaw)
+    const beta = THREE.MathUtils.degToRad(e.beta);   // X-axis (Pitch)
+    const gamma = THREE.MathUtils.degToRad(e.gamma); // Y-axis (Roll)
+
+    // Portrait Orientation Fix:
+    // 1. Subtract 90 degrees (PI/2) from beta. This recalibrates the 'horizon' 
+    //    to be looking forward when the phone is standing up, rather than flat.
+    // 2. Use 'YXZ' order. This is essential for Portrait mode to prevent 
+    //    Gimbal Lock (the 'frozen pitch' issue) when the phone is upright.
+    const euler = new THREE.Euler(beta - (Math.PI / 2), alpha, -gamma, 'YXZ');
+    gyro.target.setFromEuler(euler);
     
-    // Use rounded integers to eliminate decimal-place sensor noise
-    const currentAlpha = Math.round(e.alpha);
-    const currentBeta = Math.round(e.beta);
-    const currentGamma = Math.round(e.gamma);
-
-    if (gyro.prevAlpha === null) {
-        gyro.prevAlpha = currentAlpha;
-        gyro.prevBeta = currentBeta;
-        gyro.prevGamma = currentGamma;
-        return;
+    // If this is the first reading, initialize the calibration offset
+    if (gyro.offset.lengthSq() === 0) {
+        gyro.offset.copy(gyro.target).invert();
     }
-
-    // 1. Calculate Alpha Delta (Yaw when flat)
-    let da = currentAlpha - gyro.prevAlpha;
-    if (da > 180) da -= 360;
-    if (da < -180) da += 360;
-
-    // 2. Calculate Gamma Delta (Yaw when standing)
-    let dg = currentGamma - gyro.prevGamma;
-
-    // 3. Calculate Pitch Delta
-    const deltaPitch = currentBeta - gyro.prevBeta;
-
-    // 4. The Blend: Mix Alpha and Gamma based on the tilt (Beta)
-    // cos(0) = 1 (Flat), sin(90) = 1 (Standing)
-    const betaRad = (currentBeta * Math.PI) / 180;
-    const blendAlpha = Math.abs(Math.cos(betaRad));
-    const blendGamma = Math.abs(Math.sin(betaRad));
-    
-    // Calculate raw delta
-    const rawDeltaYaw = (da * blendAlpha) + (dg * blendGamma);
-    const rawDeltaPitch = currentBeta - gyro.prevBeta;
-
-    // 5. Smoothing / Damping
-    // Instead of raw jumps, we blend a portion of the new movement.
-    // This removes the "decimel jitter" noise better than Math.round alone.
-    const smoothing = 0.8; 
-    const sensYaw = 0.035;
-    const sensPitch = 0.015;
-
-    if (Math.abs(rawDeltaYaw) >= 1) {
-        player.targetYaw -= (rawDeltaYaw * sensYaw) * smoothing;
-    }
-    if (Math.abs(rawDeltaPitch) >= 1) {
-        player.targetPitch += (rawDeltaPitch * sensPitch) * smoothing;
-    }
-    
-    // Clamp pitch
-    player.targetPitch = Math.max(-Math.PI / 2.3, Math.min(Math.PI / 2.3, player.targetPitch));
-
-    gyro.prevAlpha = currentAlpha;
-    gyro.prevBeta = currentBeta;
-    gyro.prevGamma = currentGamma;
 }
 
 function handleCanvasClick(e) {
@@ -1102,24 +1064,31 @@ function updatePlayerPosition() {
     let moveX = 0;
     let moveZ = 0;
 
+    // Derive movement direction from the camera's current orientation.
+    // This ensures walking follows where you look (manual input + physical gyro rotation).
+    const forward = new THREE.Vector3(0, 0, -1).applyQuaternion(camera.quaternion);
+    const right = new THREE.Vector3(1, 0, 0).applyQuaternion(camera.quaternion);
+
+    // Flatten vectors to the XZ plane so looking up/down doesn't impact movement speed.
+    forward.y = 0;
+    if (forward.lengthSq() < 0.01) {
+        // Fallback to manual yaw if looking straight up or down at a pole
+        forward.set(Math.sin(player.yaw), 0, -Math.cos(player.yaw));
+    }
+    forward.normalize();
+    right.y = 0;
+    right.normalize();
+
     // 1. Gather Keyboard inputs
-    if (keys.w) { moveX += Math.sin(player.yaw); moveZ += -Math.cos(player.yaw); }
-    if (keys.s) { moveX += -Math.sin(player.yaw); moveZ += Math.cos(player.yaw); }
-    if (keys.a) { moveX += -Math.cos(player.yaw); moveZ += -Math.sin(player.yaw); }
-    if (keys.d) { moveX += Math.cos(player.yaw); moveZ += Math.sin(player.yaw); }
+    if (keys.w) { moveX += forward.x; moveZ += forward.z; }
+    if (keys.s) { moveX -= forward.x; moveZ -= forward.z; }
+    if (keys.a) { moveX -= right.x; moveZ -= right.z; }
+    if (keys.d) { moveX += right.x; moveZ += right.z; }
 
     // 2. Gather Joystick input
     if (joystickActive) {
-        // Forward vector
-        const fX = Math.sin(player.yaw);
-        const fZ = -Math.cos(player.yaw);
-        // Right vector
-        const rX = Math.cos(player.yaw);
-        const rZ = Math.sin(player.yaw);
-
-        // Combine (joystickVector.y is forward/backward, joystickVector.x is left/right)
-        moveX += rX * joystickVector.x - fX * joystickVector.y;
-        moveZ += rZ * joystickVector.x - fZ * joystickVector.y;
+        moveX += right.x * joystickVector.x - forward.x * joystickVector.y;
+        moveZ += right.z * joystickVector.x - forward.z * joystickVector.y;
     }
 
     // 3. Apply acceleration
@@ -1213,13 +1182,21 @@ function updateCameraPosition() {
     if (!renderer.xr.isPresenting) {
         playerGroup.position.set(player.pos.x, player.pos.y, player.pos.z);
 
-        // Derive Target Look vector from Yaw and Pitch
-        const target = new THREE.Vector3();
-        target.x = player.pos.x + Math.sin(player.yaw) * Math.cos(player.pitch);
-        target.z = player.pos.z - Math.cos(player.yaw) * Math.cos(player.pitch);
-        target.y = player.pos.y + Math.sin(player.pitch);
+        // 1. Create manual rotation from Mouse/Joystick (Relative Yaw/Pitch)
+        const manualRot = new THREE.Quaternion().setFromEuler(new THREE.Euler(player.pitch, -player.yaw, 0, 'YXZ'));
 
-        camera.lookAt(target);
+        // 2. Get the smoothed Gyro rotation (Absolute)
+        gyro.current.slerp(gyro.target, 0.15); // Smoothly follow the sensor
+
+        // 3. Combine: Manual Offset * (Offset Inverse * Current Sensor)
+        // This aligns the "forward" direction with the player's manual heading
+        const finalRotation = new THREE.Quaternion()
+            .copy(manualRot)
+            .multiply(gyro.offset)
+            .multiply(gyro.current);
+
+        camera.setRotationFromQuaternion(finalRotation);
+
     } else {
         // In VR, move the group (the entire virtual world origin)
         playerGroup.position.set(player.pos.x, 0, player.pos.z);
@@ -1544,6 +1521,7 @@ function animate() {
         const lerpSpeed = 0.12;
         player.yaw += (player.targetYaw - player.yaw) * lerpSpeed;
         player.pitch += (player.targetPitch - player.pitch) * lerpSpeed;
+        player.roll += (player.targetRoll - player.roll) * lerpSpeed;
 
         // Physics update
         updatePlayerPosition();
