@@ -169,14 +169,29 @@ function renderDeveloper(data) {
         const projectCard = document.createElement('div');
         projectCard.className = 'card project-card';
 
-        let imagesHtml = '';
+        let mediaHtml = '';
         if (project.images && project.images.length > 0) {
-            imagesHtml = `<div class="project-images baguetteBox-gallery">
-                ${project.images.map(img => `
-                    <a href="${img}" data-caption="${project.title}">
-                        <img src="${img}" alt="${project.title}" loading="lazy">
+            const items = project.images.map(src => {
+                const isVideo = src.match(/\.(mp4|webm|ogg)$/i);
+                if (isVideo) {
+                    // Render video with poster placeholder and controls
+                    return `
+                        <div class="project-video-wrapper">
+                            <video src="${src}" controls preload="metadata" muted playsinline>
+                                Your browser does not support the video tag.
+                            </video>
+                        </div>
+                    `;
+                }
+                // Wrap images in baguetteBox gallery links
+                return `
+                    <a href="${src}" data-caption="${project.title}">
+                        <img src="${src}" alt="${project.title}" loading="lazy">
                     </a>
-                `).join('')}
+                `;
+            });
+            mediaHtml = `<div class="project-images baguetteBox-gallery">
+                ${items.join('')}
             </div>`;
         }
 
@@ -187,7 +202,7 @@ function renderDeveloper(data) {
                 <hr style="border-color: rgba(255,255,255,0.1); margin: 1rem 0;">
                 <p>${project.description}</p>
             </div>
-            ${imagesHtml}
+            ${mediaHtml}
         `;
         container.appendChild(projectCard);
     });

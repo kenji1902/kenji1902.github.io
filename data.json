@@ -50,6 +50,14 @@
         ],
         "projects": [
             {
+                "title": "AI Companion",
+                "subtitle": "Visual AI Pipeline Builder",
+                "description": "A full-stack application for building AI pipelines with a visual node editor powered by ReactFlow. Features a drag-and-drop flow editor on the React frontend, a Python Fast API server handling AI backend logic, persistence via SQLite, and real-time sync over WebSocket. A Node.js server sits ready for future auth/gateway middleware, but the React UI communicates directly with server. The long-term vision is to evolve this into a true AI companion whose behavior you can edit in real-time through the UI",
+                "images": [
+                    "assets/home/videos/Ai Companion.mp4"
+                ]
+            },
+            {
                 "title": "Invasive Plants Classifier",
                 "subtitle": "Deep Hybrid Learning",
                 "description": "This software aims to tackle the issue of invasive plants in the Philippines by using a combination of machine learning techniques. It utilizes Convolutional Neural Network (CNN) and K-Nearest Neighbor (KNN) classifiers to accurately classify selected invasive plant species, helping to reduce their ecological and economic impact.",
@@ -93,7 +101,7 @@
                     "assets/home/images/gaussian/Screenshot 2023-03-16 211438.jpg"
                 ]
             },
-            {
+                        {
                 "title": "Round Robin Visualization",
                 "subtitle": "Java Swing IDE",
                 "description": "The Round Robin CPU Scheduling Visualization GUI is a powerful educational tool that allows students and professionals to visualize and interact with the Round Robin CPU Scheduling algorithm in a user-friendly and intuitive way. Through this GUI, users can easily adjust the time quantum, add and remove processes, and observe how the algorithm prioritizes and allocates CPU time to each process. This hands-on approach to learning helps users to better understand the intricacies of CPU scheduling and how different variables impact the performance of the system.",
@@ -102,7 +110,7 @@
                     "assets/home/images/RoundRobin/Screenshot 2023-03-16 211857.jpg",
                     "assets/home/images/RoundRobin/Screenshot 2023-03-16 211901.jpg"
                 ]
-            }
+            }  
         ]
     },
     "creative": {

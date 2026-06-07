@@ -594,6 +594,19 @@ body {
     border: 1px solid #333;
 }
 
+.project-video-wrapper {
+    flex: 0 0 auto;
+    max-width: 360px;
+}
+
+.project-video-wrapper video {
+    height: 200px;
+    border-radius: 4px;
+    border: 1px solid #333;
+    display: block;
+    background: #000;
+}
+
 
 /* RESPONSIVE VERTICAL SLIDER (Mobile) */
 @media (max-width: 768px) {
